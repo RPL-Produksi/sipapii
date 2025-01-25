@@ -113,8 +113,8 @@
     <script>
         let map;
         const showJarakAbsen = (latSis, longSis) => {
-            const latInstansi = {{ $menempati->instansi->latitude }};
-            const longInstansi = {{ $menempati->instansi->longitude }};
+            const latInstansi = {{ @$menempati->instansi->latitude }};
+            const longInstansi = {{ @$menempati->instansi->longitude }};
 
             if (map) {
                 map.off();
@@ -178,7 +178,8 @@
                         className: 'text-center',
                         orderable: false,
                         render: function(data, type, row, meta) {
-                            return meta.row + 1;
+                            let pageInfo = $('#table-1').DataTable().page.info();
+                            return meta.row + 1 + pageInfo.start;
                         }
                     },
                     {

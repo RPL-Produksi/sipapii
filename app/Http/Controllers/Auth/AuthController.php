@@ -47,6 +47,8 @@ class AuthController extends Controller
                 }
             }
         }
+
+        return redirect()->back()->with('error', 'Username atau password salah');
     }
 
     public function logout()
@@ -64,7 +66,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
         $user = User::where('id', Auth::user()->id)->first();
@@ -73,7 +75,7 @@ class AuthController extends Controller
             return redirect()->back()->with('error', 'Password lama tidak cocok');
         }
 
-        Auth::logout();
+        // Auth::logout();
         $user->password = $request->new_password;
         $user->save();
 

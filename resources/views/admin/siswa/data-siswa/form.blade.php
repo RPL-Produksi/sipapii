@@ -64,7 +64,7 @@
                                     <div class="form-group">
                                         <label for="tahun_ajar">Tahun Ajar</label>
                                         <select class="choices form-select" name="tahun_ajar_id" required id="tahun_ajar">
-                                            <option value="" @selected(old('tahun_ajar_id', @$siswa->tahun_ajar_id) == '') disabled>Pilih Kelas
+                                            <option value="" @selected(old('tahun_ajar_id', @$siswa->tahun_ajar_id) == '') disabled>Pilih Tahun Ajar
                                             </option>
                                             @foreach ($tahunAjar as $item)
                                                 <option value="{{ $item->id }}" @selected(old('tahun_ajar_id', @$siswa->tahun_ajar_id) == $item->id)>

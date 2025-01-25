@@ -101,19 +101,19 @@
                                 <div class="form-group">
                                     <h6>Instansi: <a type="button" class="text-primary"
                                             data-bs-target="#instansiDetailModal"
-                                            data-bs-toggle="modal"><span>{{ $siswa->penempatan->instansi->nama }}</span></a>
+                                            data-bs-toggle="modal"><span>{{ $siswa->penempatan->instansi->nama ?? 'Belum ditempatkan' }}</span></a>
                                     </h6>
                                 </div>
                                 <div class="form-group">
                                     <h6>Guru Pembimbing: <a type="button" class="text-primary"
                                             data-bs-target="#pembimbingDetailModal"
-                                            data-bs-toggle="modal"><span>{{ $siswa->pembimbingan->pembimbing->user->nama_lengkap }}</span></a>
+                                            data-bs-toggle="modal"><span>{{ $siswa->pembimbingan->pembimbing->user->nama_lengkap ?? 'Data tidak tersedia' }}</span></a>
                                     </h6>
                                 </div>
                                 <div class="form-group">
                                     <h6>Guru Mapel PKL: <a type="button" class="text-primary"
                                             data-bs-target="#guruMapelPklModal"
-                                            data-bs-toggle="modal"><span>{{ $siswa->pembimbingan->guruMapelPKL->user->nama_lengkap }}</span></a>
+                                            data-bs-toggle="modal"><span>{{ $siswa->pembimbingan->guruMapelPKL->user->nama_lengkap ?? 'Data tidak tersedia' }}</span></a>
                                     </h6>
                                 </div>
                             </div>
@@ -168,17 +168,17 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="nama">Nama Instansi</label>
-                        <input type="text" class="form-control" value="{{ $siswa->penempatan->instansi->nama }}"
+                        <input type="text" class="form-control" value="{{ @$siswa->penempatan->instansi->nama }}"
                             disabled>
                     </div>
                     <div class="form-group">
                         <label for="nama">Domisili Instansi</label>
-                        <input type="text" class="form-control" value="{{ $siswa->penempatan->instansi->domisili }}"
+                        <input type="text" class="form-control" value="{{ @$siswa->penempatan->instansi->domisili }}"
                             disabled>
                     </div>
                     <div class="form-group">
                         <label for="nama">Alamat Instansi</label>
-                        <textarea class="form-control" disabled>{{ $siswa->penempatan->instansi->alamat }}</textarea>
+                        <textarea class="form-control" disabled>{{ @$siswa->penempatan->instansi->alamat }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="nama">Lokasi Instansi</label>
@@ -205,12 +205,12 @@
                     <div class="form-group">
                         <label for="nama">Nama Pembimbing</label>
                         <input type="text" class="form-control"
-                            value="{{ $siswa->pembimbingan->pembimbing->user->nama_lengkap }}" disabled>
+                            value="{{ @$siswa->pembimbingan->pembimbing->user->nama_lengkap }}" disabled>
                     </div>
                     <div class="form-group">
                         <label for="nomor_wa">Nomor Whatsapp</label>
                         <input type="text" class="form-control"
-                            value="{{ $siswa->pembimbingan->pembimbing->nomor_wa }}" disabled>
+                            value="{{ @$siswa->pembimbingan->pembimbing->nomor_wa }}" disabled>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -233,12 +233,12 @@
                     <div class="form-group">
                         <label for="nama">Nama Guru Mapel PKL</label>
                         <input type="text" class="form-control"
-                            value="{{ $siswa->pembimbingan->guruMapelPKL->user->nama_lengkap }}" disabled>
+                            value="{{ @$siswa->pembimbingan->guruMapelPKL->user->nama_lengkap }}" disabled>
                     </div>
                     <div class="form-group">
                         <label for="nomor_wa">Nomor Whatsapp</label>
                         <input type="text" class="form-control"
-                            value="{{ $siswa->pembimbingan->guruMapelPKL->nomor_wa }}" disabled>
+                            value="{{ @$siswa->pembimbingan->guruMapelPKL->nomor_wa }}" disabled>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -286,8 +286,8 @@
     </script>
     <script>
         $(document).ready(() => {
-            const latInstansi = {{ $siswa->penempatan->instansi->latitude }}
-            const longInstansi = {{ $siswa->penempatan->instansi->longitude }}
+            const latInstansi = {{ @$siswa->penempatan->instansi->latitude }}
+            const longInstansi = {{ @$siswa->penempatan->instansi->longitude }}
 
             map = L.map('map').setView([latInstansi, longInstansi], 15);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

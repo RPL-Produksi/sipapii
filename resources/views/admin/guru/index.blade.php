@@ -238,7 +238,8 @@
                         className: 'text-center',
                         orderable: false,
                         render: function(data, type, row, meta) {
-                            return meta.row + 1;
+                            let pageInfo = $('#table-1').DataTable().page.info();
+                            return meta.row + 1 + pageInfo.start;
                         }
                     },
                     {
