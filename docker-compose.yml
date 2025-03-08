@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: sipapii.local
+    restart: unless-stopped
+    volumes:
+      - .:/var/www/sipapii
+    depends_on:
+      mysql:
+          condition: service_healthy
+    networks:
+      - sipapii
+  
+  webserver:
+    image: nginx:latest
+    container_name: sipapii.webserver.local
+    restart: unless-stopped
+    volumes:
+      - .:/var/www/sipapii
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - ${APP_PORT}:80
+    depends_on:
+      - app
+    networks:
+      - sipapii
+
+  mysql:
+    image: mysql:latest
+    container_name: sipapii.mysql.local
+    restart: always
+    env_file:
+      - .env
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_HOST: '%'
+    volumes:
+      - mysql:/var/lib/mysql
+    ports:
+      - 3307:3306
+    networks:
+      - sipapii
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+      timeout: 5s
+
+networks:
+  sipapii:
+    driver: bridge
+
+volumes:
+  mysql:
+    name: sipapii.mysql.local
