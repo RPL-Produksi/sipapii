@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('assets/compiled/css/app.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/compiled/css/app-dark.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/compiled/css/iconly.css') }}" />
-    <link rel="stylesheet" href="https://naramizaru.github.io/fa-pro/css/all.min.css">
+    <link rel="stylesheet" href="https://mizaru.my.id/fa-pro/css/all.min.css">
 
     @stack('css')
 </head>
