@@ -2,7 +2,9 @@
 
 namespace App\Imports;
 
+use App\Models\Kelas;
 use App\Models\Siswa;
+use App\Models\TahunAjar;
 use App\Models\User;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Illuminate\Support\Str;
@@ -10,16 +12,6 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class SiswaImport implements ToModel, WithHeadingRow
 {
-    public $userId;
-    public $kelasId;
-    public $tahunAjaranId;
-
-    public function __construct($kelasId, $tahunAjaranId)
-    {
-        $this->kelasId = $kelasId;
-        $this->tahunAjaranId = $tahunAjaranId;
-    }
-
     /**
      * @param array $row
      *
@@ -34,19 +26,26 @@ class SiswaImport implements ToModel, WithHeadingRow
             'role' => 'siswa',
         ]);
 
-        if ($row['jenis_kelamin'] == 'L') {
+        $jenisKelamin = null;
+        if (($row['jenis_kelamin'] ?? $row['Jenis_Kelamin']) == 'L') {
             $jenisKelamin = 'Laki-laki';
-        } else if ($row['jenis_kelamin'] == 'P') {
+        } elseif (($row['jenis_kelamin'] ?? $row['Jenis_Kelamin']) == 'P') {
             $jenisKelamin = 'Perempuan';
         }
+
+        $kelasNama = $row['kelas'] ?? $row['Kelas'];
+        $kelas = Kelas::firstOrCreate(['nama' => $kelasNama]);
+
+        $tahunAjarNama = $row['tahun_ajar'] ?? $row['Tahun_Ajar'];
+        $tahunAjar = TahunAjar::firstOrCreate(['tahun_ajar' => $tahunAjarNama]);
 
         if ($user) {
             Siswa::create([
                 'user_id' => $user->id,
                 'nis' => $row['nis'] ?? $row['NIS'],
                 'jenis_kelamin' => $jenisKelamin,
-                'kelas_id' => $this->kelasId,
-                'tahun_ajar_id' => $this->tahunAjaranId,
+                'kelas_id' => $kelas->id,
+                'tahun_ajar_id' => $tahunAjar->id,
             ]);
         }
     }

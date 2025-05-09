@@ -21,15 +21,8 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-
+                
                 <li class="sidebar-title">Pengelolaan</li>
-
-                <li class="sidebar-item {{ @$menu_type == 'pengelolaan-kelas' ? 'active' : '' }}">
-                    <a href="{{ route('admin.pengelolaan.kelas') }}" class="sidebar-link">
-                        <i class="fa-regular fa-school"></i>
-                        <span>Kelola Kelas</span>
-                    </a>
-                </li>
 
                 <li class="sidebar-item {{ @$menu_type == 'pengelolaan-instansi' ? 'active' : '' }}">
                     <a href="{{ route('admin.pengelolaan.instansi') }}" class="sidebar-link">
@@ -37,14 +30,7 @@
                         <span>Kelola Instansi</span>
                     </a>
                 </li>
-
-                <li class="sidebar-item {{ @$menu_type == 'pengelolaan-tahun-ajar' ? 'active' : '' }}">
-                    <a href="{{ route('admin.pengelolaan.tahun-ajar') }}" class="sidebar-link">
-                        <i class="fa-regular fa-calendar-days"></i>
-                        <span>Kelola Tahun Ajar</span>
-                    </a>
-                </li>
-
+                
                 <li class="sidebar-item {{ @$menu_type == 'penempatan' ? 'active' : '' }}">
                     <a href="{{ route('admin.pengelolaan.penempatan') }}" class="sidebar-link">
                         <i class="fa-regular fa-location-dot"></i>
@@ -56,6 +42,21 @@
                     <a href="{{ route('admin.pengelolaan.pembimbingan') }}" class="sidebar-link">
                         <i class="fa-regular fa-screen-users"></i>
                         <span>Kelola Pembimbingan</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item {{ @$menu_type == 'pengelolaan-kelas' ? 'active' : '' }}">
+                    <a href="{{ route('admin.pengelolaan.kelas') }}" class="sidebar-link">
+                        <i class="fa-regular fa-school"></i>
+                        <span>Kelola Kelas</span>
+                    </a>
+                </li>
+
+
+                <li class="sidebar-item {{ @$menu_type == 'pengelolaan-tahun-ajar' ? 'active' : '' }}">
+                    <a href="{{ route('admin.pengelolaan.tahun-ajar') }}" class="sidebar-link">
+                        <i class="fa-regular fa-calendar-days"></i>
+                        <span>Kelola Tahun Ajar</span>
                     </a>
                 </li>
 

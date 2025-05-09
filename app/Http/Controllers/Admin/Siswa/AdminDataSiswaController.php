@@ -133,20 +133,13 @@ class AdminDataSiswaController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'file' => 'required|mimes:xls,xlsx',
-            'kelas_id' => 'required',
-            'tahun_ajar_id' => 'required',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput($request->all());
         }
 
-        // dd($request->all());
-
-        $kelasId = $request->kelas_id;
-        $tahunAjaranId = $request->tahun_ajar_id;
-
-        Excel::import(new SiswaImport($kelasId, $tahunAjaranId), $request->file('file'));
+        Excel::import(new SiswaImport(), $request->file('file'));
         return redirect()->route('admin.siswa')->with('success', 'Data siswa berhasil diimport');
     }
 }
