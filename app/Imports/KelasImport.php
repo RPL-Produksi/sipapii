@@ -16,10 +16,10 @@ class KelasImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        // dd($row);
+        $namaKelas = $row['nama'] ?? $row['Nama'];
 
         return new Kelas([
-            'nama' => $row['nama'] ?? $row['Nama'],
+            'nama' => trim($namaKelas),
         ]);
     }
 }
