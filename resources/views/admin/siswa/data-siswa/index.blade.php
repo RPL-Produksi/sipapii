@@ -82,7 +82,7 @@
 
     <div class="modal fade" id="importSiswaModal" tabindex="-1" role="dialog" aria-labelledby="importSiswaModalTitle"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-centered modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="importSiswaModalTitle">Import Data Siswa</h5>
@@ -95,28 +95,6 @@
                             <input type="file" name="file" id="file" class="basic-filepond"
                                 accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                                 required />
-                        </div>
-                        <div class="form-group">
-                            <label for="kelas_id">Kelas</label>
-                            <select class="choices form-select" name="kelas_id" id="kelas_id" required>
-                                <option value="" @selected(old('kelas_id', @$siswa->kelas_id) == '') disabled>Pilih Kelas
-                                </option>
-                                @foreach ($kelas as $item)
-                                    <option value="{{ $item->id }}" @selected(old('kelas_id', @$siswa->kelas_id) == $item->id)>
-                                        {{ $item->nama }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="tahun_ajar">Tahun Ajar</label>
-                            <select class="choices form-select" name="tahun_ajar_id" required id="tahun_ajar">
-                                <option value="" @selected(old('tahun_ajar_id', @$siswa->tahun_ajar_id) == '') disabled>Pilih Kelas
-                                </option>
-                                @foreach ($tahunAjar as $item)
-                                    <option value="{{ $item->id }}" @selected(old('tahun_ajar_id', @$siswa->tahun_ajar_id) == $item->id)>
-                                        {{ $item->tahun_ajar }}</option>
-                                @endforeach
-                            </select>
                         </div>
                         <div class="form-group">
                             <div class="d-flex align-items-center justify-content-between">
@@ -136,6 +114,8 @@
                                             <th>NIS</th>
                                             <th>Nama_Lengkap</th>
                                             <th>Jenis_Kelamin</th>
+                                            <th>Kelas</th>
+                                            <th>Tahun_Ajar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -144,9 +124,13 @@
                                             <td>12209322</td>
                                             <td>Muhamad Hilal</td>
                                             <td>L</td>
+                                            <td>12 RPL 1</td>
+                                            <td>2024/2025</td>
                                         </tr>
                                         <tr>
                                             <td class="text-center">...</td>
+                                            <td>...</td>
+                                            <td>...</td>
                                             <td>...</td>
                                             <td>...</td>
                                             <td>...</td>
@@ -215,15 +199,15 @@
                     },
                     {
                         data: 'siswa.jenis_kelamin',
-                        orderable: true,
+                        orderable: false,
                     },
                     {
                         data: 'siswa.kelas.nama',
-                        orderable: true,
+                        orderable: false,
                     },
                     {
                         data: 'siswa.tahun_ajar.tahun_ajar',
-                        orderable: true,
+                        orderable: false,
                     },
                     {
                         data: 'is_active',
