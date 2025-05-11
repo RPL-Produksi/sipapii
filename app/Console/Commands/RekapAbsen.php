@@ -97,6 +97,6 @@ class RekapAbsen extends Command
         }
 
         Absen::where('tanggal', $today)->delete();
-        $this->info('Data absen telah dipindahkan ke tabel absensi');
+        $this->info(now() . ' Data absen telah dipindahkan ke tabel absensi');
     }
 }

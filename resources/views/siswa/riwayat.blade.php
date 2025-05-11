@@ -242,8 +242,6 @@
             $('#btnFilter').on('click', function() {
                 $('#table-1').DataTable().ajax.reload();
             });
-
-
         });
     </script>
     <script>

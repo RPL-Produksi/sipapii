@@ -21,29 +21,8 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-                
+
                 <li class="sidebar-title">Pengelolaan</li>
-
-                <li class="sidebar-item {{ @$menu_type == 'pengelolaan-instansi' ? 'active' : '' }}">
-                    <a href="{{ route('admin.pengelolaan.instansi') }}" class="sidebar-link">
-                        <i class="fa-regular fa-building"></i>
-                        <span>Kelola Instansi</span>
-                    </a>
-                </li>
-                
-                <li class="sidebar-item {{ @$menu_type == 'penempatan' ? 'active' : '' }}">
-                    <a href="{{ route('admin.pengelolaan.penempatan') }}" class="sidebar-link">
-                        <i class="fa-regular fa-location-dot"></i>
-                        <span>Kelola Penempatan</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item {{ @$menu_type == 'pembimbingan' ? 'active' : '' }}">
-                    <a href="{{ route('admin.pengelolaan.pembimbingan') }}" class="sidebar-link">
-                        <i class="fa-regular fa-screen-users"></i>
-                        <span>Kelola Pembimbingan</span>
-                    </a>
-                </li>
 
                 <li class="sidebar-item {{ @$menu_type == 'pengelolaan-kelas' ? 'active' : '' }}">
                     <a href="{{ route('admin.pengelolaan.kelas') }}" class="sidebar-link">
@@ -60,7 +39,65 @@
                     </a>
                 </li>
 
+                <li class="sidebar-item {{ @$menu_type == 'pengelolaan-instansi' ? 'active' : '' }}">
+                    <a href="{{ route('admin.pengelolaan.instansi') }}" class="sidebar-link">
+                        <i class="fa-regular fa-building"></i>
+                        <span>Kelola Instansi</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item {{ @$menu_type == 'penempatan' ? 'active' : '' }}">
+                    <a href="{{ route('admin.pengelolaan.penempatan') }}" class="sidebar-link">
+                        <i class="fa-regular fa-location-dot"></i>
+                        <span>Kelola Penempatan</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item {{ @$menu_type == 'pembimbingan' ? 'active' : '' }}">
+                    <a href="{{ route('admin.pengelolaan.pembimbingan') }}" class="sidebar-link">
+                        <i class="fa-regular fa-screen-users"></i>
+                        <span>Kelola Pembimbingan</span>
+                    </a>
+                </li>
+
                 <li class="sidebar-title">Data</li>
+
+                <li class="sidebar-item has-sub {{ @$menu_type == 'absen' ? 'active' : '' }}">
+                    <a href="#" class="sidebar-link">
+                        <i class="fa-regular fa-check-to-slot"></i>
+                        <span>Absen</span>
+                    </a>
+
+                    <ul class="submenu">
+                        <li class="submenu-item {{ @$submenu_type == 'absen-hari-ini-data' ? 'active' : '' }}">
+                            <a href="{{ route('admin.absen.siswa', ['type' => 'hari-ini']) }}"
+                                class="submenu-link">Absen Hari Ini</a>
+                        </li>
+
+                        <li class="submenu-item {{ @$submenu_type == 'absensi-data' ? 'active' : '' }}">
+                            <a href="{{ route('admin.absen.siswa', ['type' => 'all']) }}" class="submenu-link">Data Absensi</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item has-sub {{ @$menu_type == 'jurnal' ? 'active' : '' }}">
+                    <a href="#" class="sidebar-link">
+                        <i class="fa-regular fa-book-journal-whills"></i>
+                        <span>Jurnal</span>
+                    </a>
+
+                    <ul class="submenu">
+                        <li class="submenu-item {{ @$submenu_type == 'jurnal-data' ? 'active' : '' }}">
+                            <a href="{{ route('admin.siswa') }}" class="submenu-link">Data Jurnal</a>
+                        </li>
+
+                        <li class="submenu-item {{ @$submenu_type == 'jurnal-not-validasi-data' ? 'active' : '' }}">
+                            <a href="table-datatable-jquery.html" class="submenu-link">Jurnal Belum Divalidasi</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-title">Akun & Data</li>
 
                 <li class="sidebar-item has-sub {{ @$menu_type == 'siswa' ? 'active' : '' }}">
                     <a href="#" class="sidebar-link">
