@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Siswa;
+namespace App\Http\Controllers\Admin\AkunData\Siswa;
 
 use App\Http\Controllers\Controller;
 use App\Imports\SiswaImport;
@@ -20,7 +20,7 @@ class AdminDataSiswaController extends Controller
         $data['kelas'] = Kelas::orderBy('nama', 'ASC')->get();
         $data['tahunAjar'] = TahunAjar::orderBy('tahun_ajar', 'ASC')->get();
 
-        return view('admin.siswa.data-siswa.index', [], ['menu_type' => 'siswa', 'submenu_type' => 'siswa-data'])->with($data);
+        return view('admin.akun-data.siswa.data-siswa.index', [], ['menu_type' => 'siswa', 'submenu_type' => 'siswa-data'])->with($data);
     }
 
     public function form($id = null)
@@ -29,7 +29,7 @@ class AdminDataSiswaController extends Controller
         $data['kelas'] = Kelas::orderBy('nama', 'ASC')->get();
         $data['tahunAjar'] = TahunAjar::orderBy('tahun_ajar', 'ASC')->get();
 
-        return view('admin.siswa.data-siswa.form', [], ['menu_type' => 'siswa', 'submenu_type' => 'siswa-data'])->with($data);
+        return view('admin.akun-data.siswa.data-siswa.form', [], ['menu_type' => 'siswa', 'submenu_type' => 'siswa-data'])->with($data);
     }
 
     public function store(Request $request, $id = null)

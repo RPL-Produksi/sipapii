@@ -22,4 +22,9 @@ class Absen extends Model
         'foto_pulang',
         'jarak',
     ];
+
+    public function siswa()
+    {
+        return $this->belongsTo(Siswa::class, 'siswa_id');
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Guru;
+namespace App\Http\Controllers\Admin\AkunData\Guru;
 
 use App\Http\Controllers\Controller;
 use App\Imports\GuruImport;
@@ -15,7 +15,7 @@ class AdminGuruController extends Controller
 {
     public function index()
     {
-        return view('admin.guru.index', [], ['menu_type' => 'guru-mapel-pembimbing']);
+        return view('admin.akun-data.guru.index', [], ['menu_type' => 'guru-mapel-pembimbing']);
     }
 
     public function data(Request $request)

@@ -1,14 +1,15 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\Admin\Guru\AdminGuruController;
+use App\Http\Controllers\Admin\AkunData\Guru\AdminGuruController;
 use App\Http\Controllers\Admin\Pengelolaan\AdminPenempatanController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Admin\Pengelolaan\AdminInstansiController;
 use App\Http\Controllers\Admin\Pengelolaan\AdminKelasController;
 use App\Http\Controllers\Admin\Pengelolaan\AdminPembimbinganController;
 use App\Http\Controllers\Admin\Pengelolaan\AdminTahunAjarController;
-use App\Http\Controllers\Admin\Siswa\AdminDataSiswaController;
+use App\Http\Controllers\Admin\AkunData\Siswa\AdminDataSiswaController;
+use App\Http\Controllers\Admin\Data\Absen\AdminAbsenController;
 use App\Http\Controllers\Siswa\SiswaAbsenController;
 use App\Http\Controllers\Siswa\SiswaDashboardController;
 use App\Http\Controllers\Siswa\SiswaJurnalController;
@@ -24,7 +25,6 @@ Route::get('/', function () {
 Route::fallback(function () {
     return redirect()->route('login');
 });
-
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'index')->name('login');
@@ -107,6 +107,13 @@ Route::prefix('/admin')->middleware(['auth', 'role:admin'])->group(function () {
             Route::get('/data/{id}', 'dataById')->name('admin.siswa.data.id');
             Route::get('/{id}/delete', 'delete')->name('admin.siswa.delete');
             Route::post('/import', 'importSiswa')->name('admin.siswa.import');
+        });
+
+        Route::prefix('/absen')->group(function () {
+            Route::controller(AdminAbsenController::class)->group(function () {
+                Route::get('/', 'index')->name('admin.absen.siswa');
+                Route::get('/data', 'data')->name('admin.absen.siswa.data');
+            });
         });
     });
 
