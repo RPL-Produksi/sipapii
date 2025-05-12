@@ -17,6 +17,8 @@
     <link href="{{ asset('assets/extensions/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css') }}"
         rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/extensions/sweetalert2/sweetalert2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/extensions/leaflet/leaflet.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/extensions/leaflet-control-geocoder@2.4.0/dist/Control.Geocoder.css') }}">
 @endpush
 
 @section('content')
@@ -58,13 +60,14 @@
                                 <th>Tanggal</th>
                                 <th>Nama</th>
                                 <th>Kelas</th>
-                                <th>Jam Masuk</th>
-                                <th>Jam Pulang</th>
+                                <th class="text-center">Jam Masuk</th>
+                                <th class="text-center">Jam Pulang</th>
                                 <th>Jarak Absen</th>
                                 <th>Instansi</th>
-                                <th>Keterangan</th>
+                                <th class="text-center">Keterangan</th>
                                 <th>Pembimbing</th>
                                 <th>Guru Mapel PKL</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -73,6 +76,27 @@
             </div>
         </div>
     </section>
+
+    <div class="modal fade" id="jarakAbsenModal" tabindex="-1" role="dialog" aria-labelledby="jarakAbsenModalTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="jarakAbsenModalTitle">Lokasi Absen Siswa</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <div id="map" style="height: 400px; width: 100%;"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <span>Tutup</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('js')
@@ -82,6 +106,58 @@
     <script src="{{ asset('assets/extensions/datatables.net-responsive-bs5/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('assets/extensions/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('assets/extensions/sweetalert2/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('assets/extensions/leaflet/leaflet.js') }}"></script>
+    <script src="{{ asset('assets/extensions/leaflet-control-geocoder@2.4.0/dist/Control.Geocoder.js') }}"></script>
+    <script>
+        let map;
+        const showJarakAbsen = (id, latSis, longSis) => {
+            const type = '{{ Request::query('type') }}';
+            $.getJSON(`${window.location.origin}/admin/siswa/absen/data/${id}?type=${type}`, (data) => {
+                const latInstansi = data.siswa.penempatan.instansi.latitude;
+                const longInstansi = data.siswa.penempatan.instansi.longitude;
+
+                if (map) {
+                    map.off();
+                    map.remove();
+                }
+
+                map = L.map('map').setView([latInstansi, longInstansi], 13);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+
+                L.marker([latInstansi, longInstansi])
+                    .addTo(map)
+                    .bindPopup('Lokasi Instansi')
+                    .openPopup();
+
+                if (latSis !== null && longSis !== null) {
+                    L.marker([latSis, longSis])
+                        .addTo(map)
+                        .bindPopup('Lokasi Anda');
+
+                    const bounds = L.latLngBounds([
+                        [latInstansi, longInstansi],
+                        [latSis, longSis]
+                    ]);
+                    map.fitBounds(bounds);
+                } else {
+                    map.setView([latInstansi, longInstansi], 15);
+                }
+
+                L.circle([latInstansi, longInstansi], {
+                    color: 'red',
+                    fillColor: '#f03',
+                    fillOpacity: 0.5,
+                    radius: 500
+                }).addTo(map);
+
+                $('#jarakAbsenModal').on('shown.bs.modal', () => {
+                    map.invalidateSize();
+                });
+            })
+        };
+    </script>
     <script>
         $(document).ready(function() {
             $('#table-1').DataTable({
@@ -145,6 +221,9 @@
                     {
                         data: 'status',
                         orderable: false,
+                        render: function(data, type, row, meta) {
+                            return `<div class="badge ${data == 'Alpa' ? 'bg-danger' : 'bg-success'}">${data}</div>`;
+                        }
                     },
                     {
                         data: 'siswa.pembimbingan.pembimbing.user.nama_lengkap',
@@ -154,6 +233,23 @@
                         data: 'siswa.pembimbingan.guru_mapel_p_k_l.user.nama_lengkap',
                         orderable: false,
                     },
+                    {
+                        data: 'id',
+                        orderable: false,
+                        render: function(data, type, row, meta) {
+                            return `
+                                <div>
+                                    <a type="button" 
+                                    onclick="showJarakAbsen('${row.id}', ${row.latitude}, ${row.longitude})" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#jarakAbsenModal" 
+                                    class="btn btn-primary">
+                                    <i class="fa-regular fa-map-location-dot"></i>
+                                    </a>
+                                </div>
+                            `;
+                        }
+                    }
                 ],
                 dom: "<'row'<'col-12 col-sm-3'l><'col-12 col-sm-9 text-end text-sm-start'>>" +
                     "<'row dt-row'<'col-12'tr>>" +

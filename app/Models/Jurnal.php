@@ -22,4 +22,9 @@ class Jurnal extends Model
     {
         return $this->belongsTo(Siswa::class, 'siswa_id', 'id');
     }
+
+    public function guruMapelPkl()
+    {
+        return $this->belongsTo(Guru::class, 'guru_mapel_pkl_id', 'id');
+    }
 }
