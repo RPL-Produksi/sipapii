@@ -65,7 +65,7 @@
                 <li class="sidebar-item has-sub {{ @$menu_type == 'absen' ? 'active' : '' }}">
                     <a href="#" class="sidebar-link">
                         <i class="fa-regular fa-check-to-slot"></i>
-                        <span>Absen</span>
+                        <span>Data Absen</span>
                     </a>
 
                     <ul class="submenu">
@@ -75,7 +75,8 @@
                         </li>
 
                         <li class="submenu-item {{ @$submenu_type == 'absensi-data' ? 'active' : '' }}">
-                            <a href="{{ route('admin.absen.siswa', ['type' => 'all']) }}" class="submenu-link">Data Absensi</a>
+                            <a href="{{ route('admin.absen.siswa', ['type' => 'all']) }}" class="submenu-link">Data
+                                Absensi</a>
                         </li>
                     </ul>
                 </li>
@@ -83,16 +84,18 @@
                 <li class="sidebar-item has-sub {{ @$menu_type == 'jurnal' ? 'active' : '' }}">
                     <a href="#" class="sidebar-link">
                         <i class="fa-regular fa-book-journal-whills"></i>
-                        <span>Jurnal</span>
+                        <span>Data Jurnal</span>
                     </a>
 
                     <ul class="submenu">
                         <li class="submenu-item {{ @$submenu_type == 'jurnal-data' ? 'active' : '' }}">
-                            <a href="{{ route('admin.siswa') }}" class="submenu-link">Data Jurnal</a>
+                            <a href="{{ route('admin.jurnal.siswa', ['type' => 'all']) }}" class="submenu-link">Data
+                                Jurnal</a>
                         </li>
 
                         <li class="submenu-item {{ @$submenu_type == 'jurnal-not-validasi-data' ? 'active' : '' }}">
-                            <a href="table-datatable-jquery.html" class="submenu-link">Jurnal Belum Divalidasi</a>
+                            <a href="{{ route('admin.jurnal.siswa', ['type' => 'belum-validasi']) }}"
+                                class="submenu-link">Jurnal Belum Divalidasi</a>
                         </li>
                     </ul>
                 </li>

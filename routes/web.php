@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\Pengelolaan\AdminPembimbinganController;
 use App\Http\Controllers\Admin\Pengelolaan\AdminTahunAjarController;
 use App\Http\Controllers\Admin\AkunData\Siswa\AdminDataSiswaController;
 use App\Http\Controllers\Admin\Data\Absen\AdminAbsenController;
+use App\Http\Controllers\Admin\Data\Jurnal\AdminJurnalController;
 use App\Http\Controllers\Siswa\SiswaAbsenController;
 use App\Http\Controllers\Siswa\SiswaDashboardController;
 use App\Http\Controllers\Siswa\SiswaJurnalController;
@@ -113,6 +114,16 @@ Route::prefix('/admin')->middleware(['auth', 'role:admin'])->group(function () {
             Route::controller(AdminAbsenController::class)->group(function () {
                 Route::get('/', 'index')->name('admin.absen.siswa');
                 Route::get('/data', 'data')->name('admin.absen.siswa.data');
+                Route::get('/data/{id}', 'dataById')->name('admin.absen.siswa.data.id');
+            });
+        });
+
+        Route::prefix('/jurnal')->group(function () {
+            Route::controller(AdminJurnalController::class)->group(function () {
+                Route::get('/', 'index')->name('admin.jurnal.siswa');
+                Route::get('/data', 'data')->name('admin.jurnal.siswa.data');
+                Route::get('/data/{id}', 'dataById')->name('admin.jurnal.siswa.data.id');
+                Route::post('/{id}/status/change', 'editStatus')->name('admin.jurnal.siswa.edit.status');
             });
         });
     });

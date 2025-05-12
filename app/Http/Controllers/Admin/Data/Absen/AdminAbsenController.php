@@ -59,4 +59,15 @@ class AdminAbsenController extends Controller
 
         return response()->json($response);
     }
+
+    public function dataById(Request $request, $id)
+    {
+        if ($request->query('type') == 'hari-ini') {
+            $data = Absen::query()->with('siswa.user', 'siswa.kelas', 'siswa.penempatan.instansi', 'siswa.pembimbingan.pembimbing.user', 'siswa.pembimbingan.guruMapelPKL.user')->find($id);
+        } else if ($request->query('type') == 'all') {
+            $data = Absensi::query()->with('siswa.user', 'siswa.kelas', 'siswa.penempatan.instansi', 'siswa.pembimbingan.pembimbing.user', 'siswa.pembimbingan.guruMapelPKL.user')->find($id);
+        }
+
+        return response()->json($data);
+    }
 }
