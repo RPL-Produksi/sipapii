@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\Data\Absen\AdminAbsenController;
 use App\Http\Controllers\Admin\Data\Jurnal\AdminJurnalController;
 use App\Http\Controllers\Guru\Data\GuruAbsensiController;
 use App\Http\Controllers\Guru\Data\GuruJurnalController;
+use App\Http\Controllers\Guru\Data\GuruNilaiPklController;
 use App\Http\Controllers\Guru\GuruDashboardController;
 use App\Http\Controllers\Siswa\SiswaAbsenController;
 use App\Http\Controllers\Siswa\SiswaDashboardController;
@@ -165,6 +166,14 @@ Route::prefix('/guru')->middleware(['auth', 'role:guru'])->group(function () {
                 Route::get('/data', 'data')->name('guru.siswa.jurnal.data');
                 Route::get('/data/{id}', 'dataById')->name('guru.siswa.jurnal.data.id');
                 Route::post('/{id}/check', 'checkJurnal')->name('guru.siswa.jurnal.check');
+            });
+        });
+
+        Route::prefix('/nilai')->group(function () {
+            Route::controller(GuruNilaiPklController::class)->group(function () {
+                Route::get('/', 'index')->name('guru.siswa.nilai');
+                Route::post('/store/{id?}', 'store')->name('guru.siswa.nilai.store');
+                Route::get('/data/{id}', 'dataById')->name('guru.siswa.nilai.data.id');
             });
         });
     });

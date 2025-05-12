@@ -305,10 +305,7 @@
                 $('#editTanggal').val(convertTanggal(data.tanggal));
                 $('#editGuruMapelPkl').val(data.guru_mapel_pkl.user.nama_lengkap);
                 $('#editDeskripsiJurnal').val(data.deskripsi_jurnal);
-                console.log('validasi fetched:', data.validasi)
-                setTimeout(() => {
-                    editStatusJurnal.setChoiceByValue(data.validasi);
-                }, 100);
+                editStatusJurnal.setChoiceByValue(data.validasi);
 
 
                 const myModal = new bootstrap.Modal(document.getElementById('editJurnalModal'));

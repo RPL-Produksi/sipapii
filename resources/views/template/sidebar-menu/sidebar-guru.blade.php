@@ -38,13 +38,13 @@
         </li>
 
         <li class="sidebar-item {{ @$menu_type == 'nilai-siswa' ? 'active' : '' }}">
-            <a href="{{ route('guru.dashboard') }}" class="sidebar-link">
+            <a href="{{ route('guru.siswa.nilai') }}" class="sidebar-link">
                 <i class="fa-regular fa-book-sparkles"></i>
                 <span>Nilai Siswa</span>
             </a>
         </li>
 
-        <li class="sidebar-item {{ @$menu_type == 'nilai-siswa' ? 'active' : '' }}">
+        <li class="sidebar-item {{ @$menu_type == 'siswa' ? 'active' : '' }}">
             <a href="{{ route('guru.dashboard') }}" class="sidebar-link">
                 <i class="fa-regular fa-users"></i>
                 <span>Siswa</span>
