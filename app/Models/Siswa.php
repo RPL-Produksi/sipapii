@@ -48,13 +48,13 @@ class Siswa extends Model
         return $this->hasMany(Absen::class, 'siswa_id', 'id');
     }
 
+    public function absensi()
+    {
+        return $this->hasMany(Absensi::class, 'siswa_id', 'id');
+    }
+
     public function jurnal()
     {
         return $this->hasMany(Jurnal::class, 'siswa_id', 'id');
-    }
-
-    public function absenHariIni()
-    {
-        return $this->hasOne(Absen::class)->where('tanggal', now()->format('d-m-Y'));
     }
 }

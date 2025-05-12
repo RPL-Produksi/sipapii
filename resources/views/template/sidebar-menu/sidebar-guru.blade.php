@@ -31,7 +31,7 @@
         </li>
 
         <li class="sidebar-item {{ @$menu_type == 'jurnal' ? 'active' : '' }}">
-            <a href="{{ route('guru.dashboard') }}" class="sidebar-link">
+            <a href="{{ route('guru.siswa.jurnal') }}" class="sidebar-link">
                 <i class="fa-regular fa-book-journal-whills"></i>
                 <span>Jurnal</span>
             </a>
