@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\Data\Jurnal\AdminJurnalController;
 use App\Http\Controllers\Guru\Data\GuruAbsensiController;
 use App\Http\Controllers\Guru\Data\GuruJurnalController;
 use App\Http\Controllers\Guru\Data\GuruNilaiPklController;
+use App\Http\Controllers\Guru\Data\GuruSiswaController;
 use App\Http\Controllers\Guru\GuruDashboardController;
 use App\Http\Controllers\Siswa\SiswaAbsenController;
 use App\Http\Controllers\Siswa\SiswaDashboardController;
@@ -152,6 +153,11 @@ Route::prefix('/guru')->middleware(['auth', 'role:guru'])->group(function () {
     });
 
     Route::prefix('/siswa')->group(function () {
+        Route::controller(GuruSiswaController::class)->group(function () {
+            Route::get('/', 'index')->name('guru.siswa');
+            Route::get('/data/{id}', 'dataById')->name('guru.siswa.data.id');
+        });
+
         Route::prefix('/absen')->group(function () {
             Route::controller(GuruAbsensiController::class)->group(function () {
                 Route::get('/', 'index')->name('guru.siswa.absen');

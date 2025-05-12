@@ -88,7 +88,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-12 mb-2">
-                                <label for="">Siswa</label>
+                                <label for="">Nama Siswa</label>
                                 <select class="choices form-select" id="siswa" name="siswa_id">
                                     <option value="" selected disabled>Pilih Siswa</option>
                                     @foreach ($siswa as $item)
@@ -143,7 +143,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-12 mb-2">
-                                <label for="">Siswa</label>
+                                <label for="">Nama Siswa</label>
                                 <input type="text" id="editSiswaNama" class="form-control" disabled>
                                 <input type="hidden" name="siswa_id" id="editSiswaId" class="form-control">
                             </div>
@@ -187,7 +187,7 @@
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="detailNilaiModalTitle">Detail Jurnal Siswa</h5>
+                    <h5 class="modal-title" id="detailNilaiModalTitle">Detail Nilai PKL</h5>
                 </div>
                 <div class="modal-body">
                     <div class="row">

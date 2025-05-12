@@ -44,8 +44,8 @@
             </a>
         </li>
 
-        <li class="sidebar-item {{ @$menu_type == 'siswa' ? 'active' : '' }}">
-            <a href="{{ route('guru.dashboard') }}" class="sidebar-link">
+        <li class="sidebar-item {{ @$menu_type == 'siswa-data' ? 'active' : '' }}">
+            <a href="{{ route('guru.siswa') }}" class="sidebar-link">
                 <i class="fa-regular fa-users"></i>
                 <span>Siswa</span>
             </a>
