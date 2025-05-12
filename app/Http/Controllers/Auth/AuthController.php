@@ -38,7 +38,8 @@ class AuthController extends Controller
             } else {
                 if ($user->password == $request->password) {
                     Auth::login($user, $request->has('remember'));
-                    if ($user->role == 'gurus') {
+                    if ($user->role == 'guru') {
+                        return redirect()->route('guru.dashboard');
                     } else {
                         return redirect()->route('siswa.dashboard');
                     }
