@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\Pengelolaan\AdminTahunAjarController;
 use App\Http\Controllers\Admin\AkunData\Siswa\AdminDataSiswaController;
 use App\Http\Controllers\Admin\Data\Absen\AdminAbsenController;
 use App\Http\Controllers\Admin\Data\Jurnal\AdminJurnalController;
+use App\Http\Controllers\Guru\Data\GuruAbsensiController;
+use App\Http\Controllers\Guru\GuruDashboardController;
 use App\Http\Controllers\Siswa\SiswaAbsenController;
 use App\Http\Controllers\Siswa\SiswaDashboardController;
 use App\Http\Controllers\Siswa\SiswaJurnalController;
@@ -141,6 +143,24 @@ Route::prefix('/admin')->middleware(['auth', 'role:admin'])->group(function () {
     });
 });
 
+// Route Path Guru
+Route::prefix('/guru')->middleware(['auth', 'role:guru'])->group(function () {
+    Route::controller(GuruDashboardController::class)->group(function () {
+        Route::get('/dashboard', 'index')->name('guru.dashboard');
+    });
+
+    Route::prefix('/siswa')->group(function () {
+        Route::prefix('/absen')->group(function () {
+            Route::controller(GuruAbsensiController::class)->group(function () {
+                Route::get('/', 'index')->name('guru.siswa.absen');
+                Route::get('/data', 'data')->name('guru.siswa.absen.data');
+                Route::get('/data/{id}', 'dataById')->name('guru.siswa.absen.data.id');
+            });
+        });
+    });
+});
+
+// Route Path Siswa
 Route::prefix('/siswa')->middleware(['auth', 'role:siswa'])->group(function () {
     Route::controller(SiswaDashboardController::class)->group(function () {
         Route::get('/dashboard', 'index')->name('siswa.dashboard');

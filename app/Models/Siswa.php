@@ -52,4 +52,9 @@ class Siswa extends Model
     {
         return $this->hasMany(Jurnal::class, 'siswa_id', 'id');
     }
+
+    public function absenHariIni()
+    {
+        return $this->hasOne(Absen::class)->where('tanggal', now()->format('d-m-Y'));
+    }
 }
