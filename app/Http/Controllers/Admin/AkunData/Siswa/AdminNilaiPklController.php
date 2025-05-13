@@ -7,5 +7,8 @@ use Illuminate\Http\Request;
 
 class AdminNilaiPklController extends Controller
 {
-    //
+    public function index()
+    {
+        
+    }
 }

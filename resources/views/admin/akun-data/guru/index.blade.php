@@ -149,7 +149,7 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="importGuruModalTitle">Import Data Kelas</h5>
+                    <h5 class="modal-title" id="importGuruModalTitle">Import Data Guru</h5>
                 </div>
                 <form action="{{ route('admin.guru.import') }}" method="POST" enctype="multipart/form-data">
                     <div class="modal-body">
@@ -166,16 +166,16 @@
                                     <span class="text-danger">*Header jangan di hapus</span>
                                     <p class="text-secondary">Donwload contoh di sebelah -></p>
                                 </div>
-                                <a href="{{ asset('assets/import/Import Kelas (Example).xlsx') }}"
+                                <a href="{{ asset('assets/import/contoh_format_import_guru.xlsx') }}"
                                     class="btn btn-danger float-right mb-2"><i class="fa-regular fa-download"></i></a>
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th class="text-center">No</th>
-                                            <th>Nama_Lengkap</th>
-                                            <th>Nomor_Whatsapp</th>
+                                            <th class="text-center">no</th>
+                                            <th>nama_lengkap</th>
+                                            <th>nomor_whatsapp</th>
                                         </tr>
                                     </thead>
                                     <tbody>

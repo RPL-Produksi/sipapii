@@ -89,6 +89,7 @@ Route::prefix('/admin')->middleware(['auth', 'role:admin'])->group(function () {
                 Route::get('/{id}/delete', 'deletePenempatan')->name('admin.pengelolaan.penempatan.delete');
                 Route::get('/data', 'data')->name('admin.pengelolaan.penempatan.data');
                 Route::get('/data/{id}', 'dataById')->name('admin.pengelolaan.penempatan.data.id');
+                Route::post('/import', 'importPenempatan')->name('admin.pengelolaan.penempatan.import');
             });
         });
 

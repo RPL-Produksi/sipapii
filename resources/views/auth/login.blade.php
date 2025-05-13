@@ -27,12 +27,18 @@
                 <i class="bi bi-shield-lock"></i>
             </div>
         </div>
+        @if (Session::has('error'))
+            <div class="alert alert-danger fade show text-center" role="alert">
+                <strong>{{ Session::get('error') }}</strong>
+            </div>
+        @endif
         <div class="form-check form-check-lg d-flex align-items-end">
             <input class="form-check-input me-2" type="checkbox" value="" name="remember" id="checkboxRemember">
             <label class="form-check-label text-gray-600" for="checkboxRemember">
                 Keep me logged in
             </label>
         </div>
+
         <button class="btn btn-primary btn-block btn-md shadow-lg mt-5">Log in</button>
     </form>
 @endsection

@@ -73,19 +73,19 @@
                                     <p class="text-danger">*Domisili Wajib (Luar Kota/Dalam Kota)</p>
                                     <p class="text-secondary">Donwload contoh di sebelah -> </p>
                                 </div>
-                                <a href="{{ asset('assets/import/Import Kelas (Example).xlsx') }}"
+                                <a href="{{ asset('assets/import/contoh_format_import_instansi.xlsx') }}"
                                     class="btn btn-danger float-right mb-2"><i class="fa-regular fa-download"></i></a>
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th class="text-center">No</th>
-                                            <th>Nama</th>
-                                            <th>Alamat</th>
-                                            <th>Domisili</th>
-                                            <th>Latitude</th>
-                                            <th>Longitude</th>
+                                            <th class="text-center">no</th>
+                                            <th>nama</th>
+                                            <th>alamat</th>
+                                            <th>domisili</th>
+                                            <th>latitude</th>
+                                            <th>longitude</th>
                                         </tr>
                                     </thead>
                                     <tbody>

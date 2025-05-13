@@ -103,19 +103,19 @@
                                     <span class="text-danger">*Header jangan di hapus</span>
                                     <p class="text-secondary">Donwload contoh di sebelah -></p>
                                 </div>
-                                <a href="{{ asset('assets/import/Import Kelas (Example).xlsx') }}"
+                                <a href="{{ asset('assets/import/contoh_format_import_siswa.xlsx') }}"
                                     class="btn btn-danger float-right mb-2"><i class="fa-regular fa-download"></i></a>
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th class="text-center">No</th>
-                                            <th>NIS</th>
-                                            <th>Nama_Lengkap</th>
-                                            <th>Jenis_Kelamin</th>
-                                            <th>Kelas</th>
-                                            <th>Tahun_Ajar</th>
+                                            <th class="text-center">no</th>
+                                            <th>nis</th>
+                                            <th>nama_lengkap</th>
+                                            <th>jenis_kelamin</th>
+                                            <th>kelas</th>
+                                            <th>tahun_ajar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
