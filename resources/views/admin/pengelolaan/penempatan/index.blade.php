@@ -9,6 +9,7 @@
         rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/extensions/sweetalert2/sweetalert2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/extensions/choices.js/public/assets/styles/choices.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/extensions/filepond/filepond.css') }}">
 @endpush
 
 @section('content')
@@ -23,6 +24,10 @@
                         <div class="float-right">
                             <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addPenempatanModal"><i
                                     class="fa-regular fa-add"></i></button>
+                            <button class="btn btn-warning text-white" data-bs-toggle="modal"
+                                data-bs-target="#importPenempatanModal">
+                                <i class="fa-regular fa-file-import"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -122,6 +127,97 @@
         </div>
     </div>
 
+    <div class="modal fade" id="importPenempatanModal" tabindex="-1" role="dialog"
+        aria-labelledby="importPenempatanModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-full modal-dialog-centered modal-dialog-centered modal-dialog-scrollable"
+            role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importPenempatanModalTitle">Import Data Penempatan</h5>
+                </div>
+                <form action="{{ route('admin.pengelolaan.penempatan.import') }}" method="POST"
+                    enctype="multipart/form-data">
+                    <div class="modal-body">
+                        @csrf
+                        <div class="form-group">
+                            <label for="name" class="mb-2">File CSV | Excel</label>
+                            <input type="file" name="file" id="file" class="basic-filepond"
+                                accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                                required />
+                        </div>
+                        <div class="form-group">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-block">
+                                    <label for="table">Contoh Table</label>
+                                    <span class="text-danger">*Header jangan di hapus</span>
+                                    <p class="text-danger">*Domisili Wajib (Luar Kota/Dalam Kota)</p>
+                                    <p class="text-secondary">Donwload contoh di sebelah -></p>
+                                </div>
+                                <a href="{{ asset('assets/import/contoh_format_import_penempatan.xlsx') }}"
+                                    class="btn btn-danger float-right mb-2"><i class="fa-regular fa-download"></i></a>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered nowrap w-100">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">no</th>
+                                            <th>nis</th>
+                                            <th>nama_siswa</th>
+                                            <th>kelas</th>
+                                            <th>jenis_kelamin</th>
+                                            <th>tahun_ajar</th>
+                                            <th>nama_instansi</th>
+                                            <th>domisili</th>
+                                            <th>alamat</th>
+                                            <th>latitude</th>
+                                            <th>longitude</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center">1</td>
+                                            <td>12209322</td>
+                                            <td>Muhamad Hilal</td>
+                                            <td>12 RPL 1</td>
+                                            <td>L</td>
+                                            <td>2024/2025</td>
+                                            <td>PT. Jerbee Indonesia</td>
+                                            <td>Luar Kota</td>
+                                            <td>Jl. Suryalaya Timur IV No.20, Cijagra, Kec. Lengkong, Kota Bandung</td>
+                                            <td>-6.94610824364657</td>
+                                            <td>107.62596100280193</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">...</td>
+                                            <td>...</td>
+                                            <td>...</td>
+                                            <td>...</td>
+                                            <td>...</td>
+                                            <td>...</td>
+                                            <td>...</td>
+                                            <td>...</td>
+                                            <td>...</td>
+                                            <td>...</td>
+                                            <td>...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn text-primary" data-bs-dismiss="modal">
+                            <span>Batal</span>
+                        </button>
+                        <button type="submit" class="btn btn-success ms-1">
+                            <span>Import</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @push('js')
@@ -132,6 +228,7 @@
     <script src="{{ asset('assets/extensions/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('assets/extensions/sweetalert2/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
+    <script src="{{ asset('assets/extensions/filepond/filepond.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('#table-1').DataTable({
@@ -185,6 +282,15 @@
                     "lengthMenu": "_MENU_ ",
                 }
             });
+
+            FilePond.create(document.querySelector(".basic-filepond"), {
+                credits: null,
+                allowImagePreview: false,
+                allowMultiple: false,
+                allowFileEncode: false,
+                required: true,
+                storeAsFile: true,
+            })
         });
     </script>
     <script>

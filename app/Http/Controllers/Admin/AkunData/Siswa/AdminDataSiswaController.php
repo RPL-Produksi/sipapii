@@ -74,7 +74,12 @@ class AdminDataSiswaController extends Controller
         $columns = $request->input('columns');
         $order = $request->input('order');
 
-        $data = User::query()->where('role', 'siswa')->with('siswa', 'siswa.kelas', 'siswa.tahunAjar');
+        $data = User::query()
+            ->where('role', 'siswa')
+            ->join('siswas', 'users.id', '=', 'siswas.user_id')
+            ->join('kelas', 'siswas.kelas_id', '=', 'kelas.id')
+            ->select('users.*')
+            ->with('siswa', 'siswa.kelas', 'siswa.tahunAjar');
 
         if (!empty($order)) {
             $order = $order[0];
@@ -84,17 +89,17 @@ class AdminDataSiswaController extends Controller
             if (isset($columns[$orderBy]['data'])) {
                 $data->orderBy($columns[$orderBy]['data'], $orderDir);
             } else {
-                $data->orderBy('nama_lengkap', 'asc');
+                $data->orderBy('kelas.nama', 'asc');
             }
         } else {
-            $data->orderBy('nama_lengkap', 'asc');
+            $data->orderBy('kelas.nama', 'asc');
         }
 
         $count = $data->count();
         $countFiltered = $count;
 
         if (!empty($search['value'])) {
-            $data->where('nama_lengkap', 'LIKE', '%' . $search['value'] . '%');
+            $data->where('users.nama_lengkap', 'LIKE', '%' . $search['value'] . '%');
             $countFiltered = $data->count();
         }
 
@@ -110,6 +115,7 @@ class AdminDataSiswaController extends Controller
 
         return response()->json($response);
     }
+
 
     public function dataById($id)
     {

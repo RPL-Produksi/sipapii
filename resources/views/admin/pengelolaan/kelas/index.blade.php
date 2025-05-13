@@ -122,14 +122,14 @@
                                     <span class="text-danger">*Header jangan di hapus</span>
                                     <p class="text-secondary">Donwload contoh di sebelah -></p>
                                 </div>
-                                <a href="{{ asset('assets/import/Import Kelas (Example).xlsx') }}"
+                                <a href="{{ asset('assets/import/contoh_format_import_kelas.xlsx') }}"
                                     class="btn btn-danger float-right mb-2"><i class="fa-regular fa-download"></i></a>
                             </div>
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">No</th>
-                                        <th>Nama</th>
+                                        <th class="text-center">no</th>
+                                        <th>nama</th>
                                     </tr>
                                 </thead>
                                 <tbody>

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Admin\Pengelolaan;
 
 use App\Http\Controllers\Controller;
+use App\Imports\PenempatanImport;
 use App\Models\Instansi;
 use App\Models\Menempati;
 use App\Models\Siswa;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminPenempatanController extends Controller
 {
@@ -146,5 +148,19 @@ class AdminPenempatanController extends Controller
         $penempatan->delete();
 
         return redirect()->back()->with('success', 'Berhasil menghapus penempatan siswa');
+    }
+
+    public function importPenempatan(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'file' => 'required|file|mimes:xlsx,xls,csv,txt|max:2048',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput($request->all());
+        }
+
+        Excel::import(new PenempatanImport(), $request->file('file'));
+        return redirect()->back()->with('success', 'Data penempatan berhasil diimport');
     }
 }
