@@ -26,7 +26,7 @@
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                     <h6 class="text-muted font-semibold">PKL Luar Kota</h6>
-                                    <h6 class="font-extrabold mb-0">112.000</h6>
+                                    <h6 class="font-extrabold mb-0">{{ $pklLuarKota }}</h6>
                                 </div>
                             </div>
                         </div>
@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                     <h6 class="text-muted font-semibold">PKL Dalam Kota</h6>
-                                    <h6 class="font-extrabold mb-0">183.000</h6>
+                                    <h6 class="font-extrabold mb-0">{{ $pklDalamKota }}</h6>
                                 </div>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                     <h6 class="text-muted font-semibold">Belum Ditempatkan</h6>
-                                    <h6 class="font-extrabold mb-0">80.000</h6>
+                                    <h6 class="font-extrabold mb-0">{{ $belumDitempatkan }}</h6>
                                 </div>
                             </div>
                         </div>
@@ -77,7 +77,7 @@
                                 </div>
                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                     <h6 class="text-muted font-semibold">Total Siswa</h6>
-                                    <h6 class="font-extrabold mb-0">112</h6>
+                                    <h6 class="font-extrabold mb-0">{{ $siswa }}</h6>
                                 </div>
                             </div>
                         </div>
@@ -112,7 +112,16 @@
                                                 <th>Instansi</th>
                                             </tr>
                                         </thead>
-                                        <tbody></tbody>
+                                        <tbody>
+                                            @foreach ($penempatan as $item)
+                                                <tr>
+                                                    <td class="text-center">{{ $loop->iteration }}</td>
+                                                    <td>{{ $item->siswa->user->nama_lengkap }}</td>
+                                                    <td>{{ $item->siswa->kelas->nama }}</td>
+                                                    <td>{{ $item->instansi->nama }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -122,7 +131,7 @@
                 <div class="col-12 col-lg-4">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Absensi Terbaru</h4>
+                            <h4>Absen Terbaru</h4>
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered nowrap w-100" id="table-1">
@@ -134,11 +143,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="text-center">1</td>
-                                        <td>Muhamad Hilal</td>
-                                        <td>Universita Komputer Indonesia</td>
-                                    </tr>
+                                    @foreach ($absen as $item)
+                                        <tr>
+                                            <td class="text-center">{{ $loop->iteration }}</td>
+                                            <td>{{ $item->user->nama_lengkap }}</td>
+                                            <td>{{ $item->penempatan->instansi->nama }}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -148,7 +159,7 @@
                             <h4>Data Siswa PKL</h4>
                         </div>
                         <div class="card-body">
-                            <div id="chart-visitors-profile"></div>
+                            <div id="chart-domisili-pkl"></div>
                         </div>
                     </div>
                 </div>
@@ -192,5 +203,30 @@
                 }
             });
         });
+    </script>
+    <script>
+        const chartPklDomisili = new ApexCharts(
+            document.getElementById("chart-domisili-pkl"), {
+                series: [{{ $pklLuarKota }}, {{ $pklDalamKota }}],
+                labels: ["Luar Kota", "Dalam Kota"],
+                colors: ["#435ebe", "#55c6e8"],
+                chart: {
+                    type: "donut",
+                    width: "100%",
+                    height: "350px",
+                },
+                legend: {
+                    position: "bottom",
+                },
+                plotOptions: {
+                    pie: {
+                        donut: {
+                            size: "30%",
+                        },
+                    },
+                },
+            }
+        )
+        chartPklDomisili.render();
     </script>
 @endpush
