@@ -1,12 +1,18 @@
 {
-    "name": "Laravel Package Tutorial",
-    "short_name": "LPT",
+    "name": "SIPAPII",
+    "short_name": "SIPAPII",
     "start_url": "/index.php",
-    "background_color": "#6777ef",
-    "description": "Tutorial of Laravel Package",
+    "background_color": "#435ebe",
+    "description": "Sistem Informasi Praktik Anak Pada Instansi dan Industri",
     "display": "fullscreen",
-    "theme_color": "#6777ef",
+    "theme_color": "#435ebe",
     "icons": [
+        {
+            "src": "logo.png",
+            "sizes": "128x128",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
         {
             "src": "logo.png",
             "sizes": "512x512",
