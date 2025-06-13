@@ -33,7 +33,8 @@
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
-                                {{-- <th>Foto Profile</th> --}}
+                                <th>Foto Profile</th>
+                                <th>NIP</th>
                                 <th>Nama</th>
                                 <th>Nomor Whatsapp</th>
                                 <th>Action</th>
@@ -87,6 +88,11 @@
                     <div class="modal-body">
                         @csrf
                         <div class="form-group">
+                            <label for="nip">NIP Guru</label>
+                            <input type="text" class="form-control" id="nip" name="nip"
+                                placeholder="Masukan NIP Guru" required>
+                        </div>
+                        <div class="form-group">
                             <label for="nama_lengkap">Nama Guru</label>
                             <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap"
                                 placeholder="Masukan Nama Guru" required>
@@ -120,6 +126,11 @@
                 <form method="POST" id="form-edit-guru">
                     <div class="modal-body">
                         @csrf
+                        <div class="form-group">
+                            <label for="nip">NIP Guru</label>
+                            <input type="text" class="form-control" id="edit-nip-guru" name="nip"
+                                placeholder="Masukan NIP Guru" required>
+                        </div>
                         <div class="form-group">
                             <label for="nama_lengkap">Nama Guru</label>
                             <input type="text" class="form-control" id="edit-nama-guru" name="nama_lengkap"
@@ -174,6 +185,7 @@
                                     <thead>
                                         <tr>
                                             <th class="text-center">no</th>
+                                            <th>nip</th>
                                             <th>nama_lengkap</th>
                                             <th>nomor_whatsapp</th>
                                         </tr>
@@ -181,11 +193,13 @@
                                     <tbody>
                                         <tr>
                                             <td class="text-center">1</td>
+                                            <td>123112312212</td>
                                             <td>John Doe</td>
                                             <td>08123123123</td>
                                         </tr>
                                         <tr>
                                             <td class="text-center">...</td>
+                                            <td>...</td>
                                             <td>...</td>
                                             <td>...</td>
                                         </tr>
@@ -243,12 +257,29 @@
                         }
                     },
                     {
+                        data: 'profile_picture',
+                        orderable: false,
+                        className: "text-center",
+                        render: function(data, type, row) {
+                            let defaultImage = '{{ asset('assets/static/images/faces/1.jpg') }}';
+                            let imageUrl = data ? data : defaultImage;
+                            return `<img src="${imageUrl}" alt="Foto Profil" class="img-fluid rounded-circle" style="max-width: 80px;" />`;
+                        }
+                    },
+                    {
+                        data: 'guru.nip',
+                        orderable: false,
+                        render: function(data, type, row) {
+                            return data ? data : 'Tidak ada';
+                        }
+                    },
+                    {
                         data: 'nama_lengkap',
                         orderable: true,
                     },
                     {
                         data: 'guru.nomor_wa',
-                        orderable: true,
+                        orderable: false,
                     },
                     {
                         data: 'id',
@@ -300,6 +331,7 @@
 
                 $('#form-edit-guru').attr('action', updateUrl.replace(':id', id));
                 $('#edit-nama-guru').val(data.nama_lengkap);
+                $('#edit-nip-guru').val(data.guru.nip);
                 $('#edit-nomor-wa-guru').val(data.guru.nomor_wa);
 
                 const myModal = new bootstrap.Modal(document.getElementById('editGuruModal'));

@@ -73,6 +73,7 @@ class AdminGuruController extends Controller
     public function addGuru(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'nip' => 'nullable',
             'nama_lengkap' => 'required',
             'nomor_wa' => 'required|digits_between:10,15',
         ]);
@@ -102,6 +103,7 @@ class AdminGuruController extends Controller
 
         if ($user) {
             $guru = new Guru();
+            $guru->nip = $request->nip;
             $guru->user_id = $user->id;
             $guru->nomor_wa = $request->nomor_wa;
             $guru->save();
@@ -113,6 +115,7 @@ class AdminGuruController extends Controller
     public function editGuru(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'nip' => 'nullable',
             'nama_lengkap' => 'required',
             'nomor_wa' => 'required|digits_between:10,15',
         ]);
@@ -128,6 +131,7 @@ class AdminGuruController extends Controller
         if ($user) {
             $guru = Guru::where('user_id', $request->id)->first();
             $guru->nomor_wa = $request->nomor_wa;
+            $guru->nip = $request->nip;
             $guru->save();
         }
 

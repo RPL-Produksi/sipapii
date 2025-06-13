@@ -12,6 +12,17 @@ class AuthController extends Controller
 {
     public function index()
     {
+        if (Auth::check()) {
+            $user = Auth::user();
+            if ($user->role === 'admin') {
+                return redirect()->route('admin.dashboard');
+            } else if ($user->role === 'guru') {
+                return redirect()->route('guru.dashboard');
+            } else if ($user->role === 'siswa') {
+                return redirect()->route('siswa.dashboard');
+            }
+        }
+
         return view('auth.login');
     }
 

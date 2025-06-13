@@ -22,11 +22,21 @@
 <body>
     <script src="{{ asset('assets/static/js/initTheme.js') }}"></script>
     <div id="app">
-        @include('template.navbar')
+        @include('template.sidebar')
+        <div id="main">
+            @include('template.header')
 
-        @yield('content')
+            <div class="page-heading mt-4">
+                <h3>@yield('title')</h3>
+            </div>
+            <div class="page-content" style="min-height: 100vh">
+                @yield('content')
+            </div>
 
-        @include('template.bottombar.siswa')
+        </div>
+        <div class="d-block d-md-none">
+            @include('template.bottombar.guru')
+        </div>
     </div>
 
     {{-- Global JS --}}

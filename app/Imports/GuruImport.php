@@ -38,6 +38,7 @@ class GuruImport implements ToModel, WithHeadingRow
 
         if ($user) {
             Guru::create([
+                'nip' => $row['nip'] ?? $row['NIP'],
                 'user_id' => $user->id,
                 'nomor_wa' => $nomorWa,
             ]);
