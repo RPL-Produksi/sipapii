@@ -24,10 +24,7 @@ use App\Http\Controllers\Siswa\SiswaRiwayatController;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::redirect('/', 'login');
 Route::fallback(function () {
     return redirect()->route('login');
 });
