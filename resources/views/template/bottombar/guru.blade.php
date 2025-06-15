@@ -1,66 +1,55 @@
-{{-- @php
-    use App\Models\Absen;
-    use Carbon\Carbon;
-
-    $siswa = Auth::user();
-    $absen_url = null;
-
-    if ($siswa) {
-        $absenHariIni = Absen::where('siswa_id', $siswa->siswa->id)
-            ->where('tanggal', Carbon::now()->format('d-m-Y'))
-            ->first();
-
-        if (!$absenHariIni || !$absenHariIni->jam_masuk) {
-            $absen_url = route('siswa.absen', ['type' => 'masuk']);
-        } elseif (!$absenHariIni->jam_pulang) {
-            $absen_url = route('siswa.absen', ['type' => 'pulang', 'absen_id' => $absenHariIni->id]);
-        } else {
-            $absen_url = null;
-        }
-    }
-@endphp --}}
-
-<div class="w-100 bottom-0 left-0 bg-body right-0 d-flex align-items-center justify-content-center shadow-lg border-top border-1 
-border-primary"
+<div class="w-100 bottom-0 left-0 bg-body right-0 d-flex align-items-center justify-content-center shadow-lg border-top border-1 border-primary"
     style="position: fixed; height: 65px; z-index: 100;">
-    <a href="{{ route('siswa.dashboard') }}"
+
+    <a href="{{ route('guru.dashboard') }}"
         class="row d-flex align-items-center justify-content-center text-center w-100 {{ @$menu_type == 'dashboard' ? 'nav-link' : '' }}"
         style="height: 45px">
         <div class="col">
-            <i class="fa-regular fa-home fs-4"></i>
-            <p class="fw-bold">Beranda</p>
+            <i class="fa-regular fa-grid-2 fs-4"></i>
+            <p class="fw-bold">Dashboard</p>
         </div>
     </a>
-    <a href="{{ route('siswa.jurnal') }}"
+
+    <div class="dropup text-center w-100">
+        <a href="#"
+            class="row d-flex align-items-center justify-content-center text-center w-100 {{ @$menu_type == 'absen' ? 'nav-link' : '' }}"
+            style="height: 45px" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="col">
+                <i class="fa-regular fa-check-to-slot fs-4"></i>
+                <p class="fw-bold">Absensi Siswa</p>
+            </div>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item {{ @$submenu_type == 'absensi' ? 'active' : '' }}" href="{{ route('guru.siswa.absen', ['type' => 'data']) }}">Data Absensi</a></li>
+            <li><a class="dropdown-item {{ @$submenu_type == 'rekap' ? 'active' : '' }}" href="{{ route('guru.siswa.absen', ['type' => 'rekap']) }}">Rekap Absensi</a></li>
+        </ul>
+    </div>
+
+
+    <a href="{{ route('guru.siswa.jurnal') }}"
         class="row d-flex align-items-center justify-content-center text-center w-100 {{ @$menu_type == 'jurnal' ? 'nav-link' : '' }}"
         style="height: 45px">
         <div class="col">
-            <i class="fa-regular fa-book fs-4"></i>
+            <i class="fa-regular fa-book-journal-whills fs-4"></i>
             <p class="fw-bold">Jurnal</p>
         </div>
     </a>
-    <a href=""
-        class="row d-flex align-items-center justify-content-center text-center w-100 {{ @$menu_type == 'absen' ? 'nav-link' : '' }}"
+
+    <a href="{{ route('guru.siswa.nilai') }}"
+        class="row d-flex align-items-center justify-content-center text-center w-100 {{ @$menu_type == 'nilai-siswa' ? 'nav-link' : '' }}"
         style="height: 45px">
         <div class="col">
-            <i class="fa-regular fa-camera fs-4"></i>
-            <p class="fw-bold">Absen</p>
+            <i class="fa-regular fa-book-sparkles fs-4"></i>
+            <p class="fw-bold">Nilai Siswa</p>
         </div>
     </a>
-    <a href="{{ route('siswa.riwayat') }}"
-        class="row d-flex align-items-center justify-content-center text-center w-100 {{ @$menu_type == 'riwayat' ? 'nav-link' : '' }}"
+
+    <a href="{{ route('guru.siswa') }}"
+        class="row d-flex align-items-center justify-content-center text-center w-100 {{ @$menu_type == 'siswa-data' ? 'nav-link' : '' }}"
         style="height: 45px">
         <div class="col">
-            <i class="fa-regular fa-clock-rotate-left fs-4"></i>
-            <p class="fw-bold">Riwayat</p>
-        </div>
-    </a>
-    <a href="{{ route('siswa.profile') }}"
-        class="row d-flex align-items-center justify-content-center text-center w-100 {{ @$menu_type == 'profile' ? 'nav-link' : '' }}"
-        style="height: 45px">
-        <div class="col">
-            <i class="fa-regular fa-user fs-4"></i>
-            <p class="fw-bold">Profil</p>
+            <i class="fa-regular fa-users fs-4"></i>
+            <p class="fw-bold">Siswa</p>
         </div>
     </a>
 </div>

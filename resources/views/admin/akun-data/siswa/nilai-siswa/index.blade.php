@@ -1,4 +1,4 @@
-@extends('layouts.app-3')
+@extends('layouts.app')
 @section('title', 'Data Nilai PKL Siswa')
 
 @push('css')
@@ -22,12 +22,8 @@
                             <div class="d-flex align-items-center justify-content-between">
                                 <h4 class="card-title">Nilai PKL Siswa</h4>
                                 <div class="float-right">
-                                    <button class="btn btn-success" data-bs-target="#storeNilaiModal"
-                                        data-bs-toggle="modal">
-                                        <div class="fa-regular fa-plus"></div>
-                                    </button>
                                     <button class="btn btn-danger">
-                                        <div class="fa-regular fa-file-excel"></div>
+                                        <div class="fa-regular fa-file-pdf"></div>
                                     </button>
                                 </div>
                             </div>
@@ -76,61 +72,6 @@
         </div>
     </section>
 
-    <div class="modal fade" id="storeNilaiModal" tabindex="-1" role="dialog" aria-labelledby="storeNilaiModalTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="storeNilaiModalTitle">Tambah Nilai PKL</h5>
-                </div>
-                <form action="{{ route('guru.siswa.nilai.store') }}" method="POST">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-12 mb-2">
-                                <label for="">Nama Siswa</label>
-                                <select class="choices form-select" id="siswa" name="siswa_id">
-                                    <option value="" selected disabled>Pilih Siswa</option>
-                                    @foreach ($siswa as $item)
-                                        <option value="{{ $item->id }}">{{ $item->user->nama_lengkap }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-12 mb-2">
-                                <label for="">Internalisasi dan Penerapan Soft Skills</label>
-                                <input type="text" inputmode="numeric" class="form-control" name="nilai1"
-                                    placeholder="Masukkan Nilai">
-                            </div>
-                            <div class="col-12 mb-2">
-                                <label for="">Penerapan Hard Skills</label>
-                                <input type="text" inputmode="numeric" class="form-control" name="nilai2"
-                                    placeholder="Masukkan Nilai">
-                            </div>
-                            <div class="col-12 mb-2">
-                                <label for="">Peningkatan dan Pengembangan Hard Skills</label>
-                                <input type="text" inputmode="numeric" class="form-control" name="nilai3"
-                                    placeholder="Masukkan Nilai">
-                            </div>
-                            <div class="col-12 mb-2">
-                                <label for="">Penyiapan Kemandirian Berwirausaha</label>
-                                <input type="text" inputmode="numeric" class="form-control" name="nilai4"
-                                    placeholder="Masukkan Nilai">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-link text-decoration-none" data-bs-dismiss="modal">
-                            <span>Tutup</span>
-                        </button>
-                        <button type="submit" class="btn btn-success">
-                            <span>Simpan</span>
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
     <div class="modal fade" id="editNilaiModal" tabindex="-1" role="dialog" aria-labelledby="editNilaiModalTitle"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-centered" role="document">
@@ -167,6 +108,7 @@
                                 <input type="text" inputmode="numeric" class="form-control" name="nilai4"
                                     placeholder="Masukkan Nilai" id="editNilai4">
                             </div>
+                            <input type="hidden" id="editGuruMapelPklId" name="guru_pkl_id">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -279,7 +221,7 @@
     </script>
     <script>
         const show = (id) => {
-            $.getJSON(`${window.location.origin}/guru/siswa/nilai/data/${id}`, (data) => {
+            $.getJSON(`${window.location.origin}/admin/siswa/nilai/data/${id}`, (data) => {
                 $('#detailNamaLengkap').text(data.siswa.user.nama_lengkap)
                 $('#detailKelas').text(data.siswa.kelas.nama)
                 $('#detailNilai1').text(data.nilai1)
@@ -293,8 +235,8 @@
         }
 
         const edit = (id) => {
-            $.getJSON(`${window.location.origin}/guru/siswa/nilai/data/${id}`, (data) => {
-                const updateUrl = '{{ route('guru.siswa.nilai.store', ':id') }}'
+            $.getJSON(`${window.location.origin}/admin/siswa/nilai/data/${id}`, (data) => {
+                const updateUrl = '{{ route('admin.siswa.nilai.store', ':id') }}'
                 $('#formEditNilai').attr('action', updateUrl.replace(':id', id))
 
                 $('#editSiswaId').val(data.siswa.id)
@@ -303,6 +245,7 @@
                 $('#editNilai2').val(data.nilai2)
                 $('#editNilai3').val(data.nilai3)
                 $('#editNilai4').val(data.nilai4)
+                $('#editGuruMapelPklId').val(data.guru_mapel_pkl_id)
 
                 const myModal = new bootstrap.Modal(document.getElementById('editNilaiModal'));
                 myModal.show();

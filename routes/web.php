@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Pengelolaan\AdminKelasController;
 use App\Http\Controllers\Admin\Pengelolaan\AdminPembimbinganController;
 use App\Http\Controllers\Admin\Pengelolaan\AdminTahunAjarController;
 use App\Http\Controllers\Admin\AkunData\Siswa\AdminDataSiswaController;
+use App\Http\Controllers\Admin\AkunData\Siswa\AdminNilaiPklController;
 use App\Http\Controllers\Admin\Data\Absen\AdminAbsenController;
 use App\Http\Controllers\Admin\Data\Jurnal\AdminJurnalController;
 use App\Http\Controllers\Guru\Data\GuruAbsensiController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\Guru\Data\GuruJurnalController;
 use App\Http\Controllers\Guru\Data\GuruNilaiPklController;
 use App\Http\Controllers\Guru\Data\GuruSiswaController;
 use App\Http\Controllers\Guru\GuruDashboardController;
+use App\Http\Controllers\Guru\GuruProfileController;
 use App\Http\Controllers\Siswa\SiswaAbsenController;
 use App\Http\Controllers\Siswa\SiswaDashboardController;
 use App\Http\Controllers\Siswa\SiswaJurnalController;
@@ -113,6 +115,14 @@ Route::prefix('/admin')->middleware(['auth', 'role:admin'])->group(function () {
             Route::post('/import', 'importSiswa')->name('admin.siswa.import');
         });
 
+        Route::prefix('/nilai')->group(function () {
+            Route::controller(AdminNilaiPklController::class)->group(function () {
+                Route::get('/', 'index')->name('admin.siswa.nilai');
+                Route::post('/store/{id?}', 'store')->name('admin.siswa.nilai.store');
+                Route::get('/data/{id}', 'dataById')->name('admin.siswa.nilai.data.id');
+            });
+        });
+
         Route::prefix('/absen')->group(function () {
             Route::controller(AdminAbsenController::class)->group(function () {
                 Route::get('/', 'index')->name('admin.absen.siswa');
@@ -148,6 +158,12 @@ Route::prefix('/admin')->middleware(['auth', 'role:admin'])->group(function () {
 Route::prefix('/guru')->middleware(['auth', 'role:guru'])->group(function () {
     Route::controller(GuruDashboardController::class)->group(function () {
         Route::get('/dashboard', 'index')->name('guru.dashboard');
+    });
+
+    Route::controller(GuruProfileController::class)->group(function () {
+        Route::get('/profile', 'index')->name('guru.profile');
+        Route::post('/profile/edit', 'edit')->name('guru.profile.edit');
+        Route::post('/picture/edit', 'changeProfile')->name('guru.profile.picture.edit');
     });
 
     Route::prefix('/siswa')->group(function () {

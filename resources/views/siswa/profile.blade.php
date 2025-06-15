@@ -1,5 +1,5 @@
 @extends('layouts.app-2')
-@section('title', 'Jurnal Siswa')
+@section('title', 'Profil Siswa')
 
 @push('css')
     {{-- CSS Only For This Page --}}
@@ -202,6 +202,15 @@
                     <h5 class="modal-title" id="pembimbingDetailModalTitle">Detail Pembimbing</h5>
                 </div>
                 <div class="modal-body">
+                    <div class="form-group text-center">
+                        <img src="{{ @$siswa->pembimbingan->pembimbing->user->profile_picture }}" alt=""
+                            class="img-fluid rounded-circle" width="250" height="250">
+                    </div>
+                    <div class="form-group">
+                        <label for="nip">NIP Pembimbing</label>
+                        <input type="text" class="form-control" value="{{ @$siswa->pembimbingan->pembimbing->nip }}"
+                            disabled>
+                    </div>
                     <div class="form-group">
                         <label for="nama">Nama Pembimbing</label>
                         <input type="text" class="form-control"
@@ -230,6 +239,15 @@
                     <h5 class="modal-title" id="guruMapelPklModalTitle">Detail Guru Mapel PKL</h5>
                 </div>
                 <div class="modal-body">
+                    <div class="form-group text-center">
+                        <img src="{{ @$siswa->pembimbingan->guruMapelPKL->user->profile_picture }}" alt=""
+                            class="img-fluid rounded-circle" width="250" height="250">
+                    </div>
+                    <div class="form-group">
+                        <label for="nip">NIP Guru Mapel PKL</label>
+                        <input type="text" class="form-control"
+                            value="{{ @$siswa->pembimbingan->guruMapelPKL->nip }}" disabled>
+                    </div>
                     <div class="form-group">
                         <label for="nama">Nama Guru Mapel PKL</label>
                         <input type="text" class="form-control"

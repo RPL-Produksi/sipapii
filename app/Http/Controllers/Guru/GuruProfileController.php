@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Siswa;
+namespace App\Http\Controllers\Guru;
 
 use App\Http\Controllers\Controller;
-use App\Models\Kelas;
-use App\Models\TahunAjar;
+use App\Models\Guru;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,32 +11,38 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\ImageManager;
 
-class SiswaProfileController extends Controller
+class GuruProfileController extends Controller
 {
     public function index()
     {
-        $data['siswa'] = Auth::user()->siswa;
-        $data['kelas'] = Kelas::orderBy('nama', 'ASC')->get();
-        $data['tahunAjar'] = TahunAjar::orderBy('tahun_ajar', 'ASC')->get();
+        $data['guru'] = Auth::user()->guru;
 
-        return view('siswa.profile', [], ['menu_type' => 'profile'])->with($data);
+        return view('guru.profile', [], ['menu_type' => 'profile'])->with($data);
     }
 
-    public function addEmail(Request $request)
+    public function edit(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email|unique:users,email',
+            'email' => 'nullable|email',
+            'nomor_wa' => 'required|digits_between:10,15',
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator->errors())->withInput($request->all());
         }
 
-        $user = User::where('id', Auth::user()->id)->first();
-        $user->email = $request->email;
-        $user->save();
+        $nomorWa = preg_replace('/\D/', '', $request->nomor_wa);
 
-        return redirect()->back()->with('success', 'Email berhasil ditambahkan');
+        $user = User::where('id', Auth::user()->id)->first();
+        $guru = Guru::where('user_id', $user->id)->first();
+
+        $user->email = $request->email;
+        $guru->nomor_wa = $nomorWa;
+
+        $user->save();
+        $guru->save();
+
+        return redirect()->back()->with('success', 'Data akun telah diperbarui');
     }
 
     public function changeProfile(Request $request)

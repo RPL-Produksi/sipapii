@@ -100,8 +100,8 @@
                     <a href="{{ route('admin.siswa') }}" class="submenu-link">Data Siswa</a>
                 </li>
 
-                <li class="submenu-item">
-                    <a href="table-datatable-jquery.html" class="submenu-link">Nilai Siswa</a>
+                <li class="submenu-item {{ @$submenu_type == 'nilai-data' ? 'active' : '' }}">
+                    <a href="{{ route('admin.siswa.nilai') }}" class="submenu-link">Nilai Siswa</a>
                 </li>
             </ul>
         </li>

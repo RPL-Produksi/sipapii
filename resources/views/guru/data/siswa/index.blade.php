@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app-3')
 @section('title', 'Data Siswa')
 
 @push('css')

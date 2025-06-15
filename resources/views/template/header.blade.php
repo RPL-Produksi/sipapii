@@ -44,14 +44,22 @@
                     aria-haspopup="true" aria-expanded="false">
                     <span class="mr-2 d-none d-lg-inline small">{{ auth()->user()->nama_lengkap }}</span>
                     <div class="avatar avatar-md">
-                        <img src="{{ asset('assets/static/images/faces/1.jpg') }}" alt="">
+                        @if (Auth::user()->profile_picture === null)
+                            <img src="{{ asset('assets/static/images/faces/1.jpg') }}" alt="">
+                        @else
+                            <img src="{{ Auth::user()->profile_picture }}" alt="">
+                        @endif
                         <div class="avatar-status bg-success"></div>
                     </div>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownProfile">
-                    <a class="dropdown-item" href="#">Profile</a>
-                    <a class="dropdown-item" href="#">Setting</a>
-                    <div class="dropdown-divider"></div>
+                    @if (auth()->user()->role === 'admin')
+                        <a class="dropdown-item" href="#">Profile</a>
+                        <a class="dropdown-item" href="#">Setting</a>
+                        <div class="dropdown-divider"></div>
+                    @else
+                        <a class="dropdown-item" href="{{ route('guru.profile') }}">Profile</a>
+                    @endif
                     <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
                 </div>
             </div>

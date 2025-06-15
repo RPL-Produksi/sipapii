@@ -34,7 +34,7 @@
             </div>
 
         </div>
-        <div class="d-block d-md-none">
+        <div class="d-block d-lg-none">
             @include('template.bottombar.guru')
         </div>
     </div>
