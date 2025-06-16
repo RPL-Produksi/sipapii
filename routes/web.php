@@ -194,6 +194,7 @@ Route::prefix('/guru')->middleware(['auth', 'role:guru'])->group(function () {
                 Route::get('/', 'index')->name('guru.siswa.nilai');
                 Route::post('/store/{id?}', 'store')->name('guru.siswa.nilai.store');
                 Route::get('/data/{id}', 'dataById')->name('guru.siswa.nilai.data.id');
+                Route::get('/{id}/rekomendasi-nilai', 'getRekomendasi')->name('guru.siswa.nilai.rekomendasi');
             });
         });
     });

@@ -52,8 +52,6 @@ class SiswaAbsenController extends Controller
 
   public function absen(Request $request)
   {
-
-    // dd($request->all());
     $id = $request->query('absen_id');
     $type = $request->query('type');
 
@@ -67,6 +65,8 @@ class SiswaAbsenController extends Controller
       'long' => 'required_if:type,masuk|numeric|between:-180,180',
       'status' => 'required_if:type,pulang|in:Hadir,Sakit,Izin',
       'jurnal' => 'required_if:type,pulang',
+      'rating_tugas' => 'required_if:type,pulang|numeric|min:10|max:100',
+      'rating_kompetensi' => 'required_if:type,pulang|numeric|min:10|max:100',
     ]);
 
     $validator->sometimes('alasan', 'required', function ($input) {
@@ -116,6 +116,9 @@ class SiswaAbsenController extends Controller
       $input['longitude'] = $request->long;
       $input['jarak'] = $jarak;
     } else {
+      $input['rating_tugas'] = $request->rating_tugas;
+      $input['rating_kompetensi'] = $request->rating_kompetensi;
+
       $jurnal = new Jurnal();
       $jurnal->siswa_id = $siswaId;
       $jurnal->guru_mapel_pkl_id = $pembimbing->guru_mapel_pkl_id;

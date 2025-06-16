@@ -43,6 +43,22 @@
             border-radius: 15px;
             overflow: hidden;
         }
+
+        .rating-star {
+            font-size: 28px;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.2s;
+        }
+
+        .rating-star:hover {
+            transform: scale(1.2);
+        }
+
+        .fa-star-half-stroke,
+        .fa-solid.fa-star {
+            color: gold;
+        }
     </style>
 @endpush
 
@@ -159,8 +175,21 @@
                             <label for="jurnal">Jurnal</label>
                             <textarea name="jurnal" id="jurnal" rows="3" class="form-control" required></textarea>
                         </div>
-                        <input type="file" accept="image/*" capture="camera" name="camera_data"
-                            id="camerInputPulang" class="d-none">
+                        <div class="form-group">
+                            <label>Rating Tugas</label>
+                            <div id="ratingTugasStars" class="rating-star-wrapper"></div>
+                            <input type="hidden" name="rating_tugas" id="ratingTugasValue" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Rating Kompetensi</label>
+                            <div id="ratingKompetensiStars" class="rating-star-wrapper"></div>
+                            <input type="hidden" name="rating_kompetensi" id="ratingKompetensiValue" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="file" accept="image/*" capture="camera" name="camera_data"
+                                id="camerInputPulang" class="d-none">
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn" data-bs-dismiss="modal">
@@ -351,5 +380,59 @@
                 type: mimeString
             });
         }
+    </script>
+    <script>
+        function initRating(containerId, inputId) {
+            const container = document.getElementById(containerId);
+            const input = document.getElementById(inputId);
+            for (let i = 1; i <= 5; i++) {
+                const star = document.createElement('i');
+                star.classList.add('fa-regular', 'fa-star', 'rating-star');
+                star.dataset.value = i;
+                container.appendChild(star);
+            }
+
+            let selectedRating = 0;
+
+            container.querySelectorAll(".rating-star").forEach((star, index) => {
+                star.addEventListener("mousemove", function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const half = x < rect.width / 2;
+                    highlightStars(container, index + 1 - (half ? 0.5 : 0));
+                });
+
+                star.addEventListener("click", function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const half = x < rect.width / 2;
+                    selectedRating = index + 1 - (half ? 0.5 : 0);
+                    input.value = selectedRating * 20;
+                });
+
+                star.addEventListener("mouseleave", () => {
+                    highlightStars(container, selectedRating);
+                });
+            });
+
+            function highlightStars(container, rating) {
+                const stars = container.querySelectorAll(".rating-star");
+                stars.forEach((star, i) => {
+                    star.classList.remove("fa-solid", "fa-regular", "fa-star-half-stroke");
+                    if (rating >= i + 1) {
+                        star.classList.add("fa-solid", "fa-star");
+                    } else if (rating >= i + 0.5) {
+                        star.classList.add("fa-solid", "fa-star-half-stroke");
+                    } else {
+                        star.classList.add("fa-regular", "fa-star");
+                    }
+                });
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            initRating('ratingTugasStars', 'ratingTugasValue');
+            initRating('ratingKompetensiStars', 'ratingKompetensiValue');
+        });
     </script>
 @endpush
