@@ -88,6 +88,15 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-12 mb-2">
+                                <div id="rekomendasi-nilai" class="alert alert-info d-none">
+                                    <strong>Rekomendasi Nilai PKL:</strong>
+                                    <ul class="mb-0">
+                                        <li><span id="nilai_tugas">-</span> (Tugas)</li>
+                                        <li><span id="nilai_kompetensi">-</span> (Kompetensi)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-12 mb-2">
                                 <label for="">Nama Siswa</label>
                                 <select class="choices form-select" id="siswa" name="siswa_id">
                                     <option value="" selected disabled>Pilih Siswa</option>
@@ -253,7 +262,7 @@
     <script src="{{ asset('assets/extensions/datatables.net-responsive-bs5/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('assets/extensions/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
-    <script>
+    {{-- <script>
         let choices = document.querySelectorAll(".choices")
         let initChoice
         for (let i = 0; i < choices.length; i++) {
@@ -268,7 +277,7 @@
                 initChoice = new Choices(choices[i])
             }
         }
-    </script>
+    </script> --}}
     <script>
         $(document).ready(function() {
             $('#table-1').DataTable({
@@ -308,5 +317,24 @@
                 myModal.show();
             })
         }
+    </script>
+    <script>
+        $('#siswa').on('change', function() {
+            console.log(document.querySelector("#siswa"))
+            const siswaId = $(this).val();
+            console.log(siswaId)
+
+            if (!siswaId) return;
+
+            $.getJSON(`${window.location.origin}/guru/siswa/nilai/${siswaId}/rekomendasi-nilai`, (data) => {
+                if (data && data.success) {
+                    $('#nilai_tugas').text(data.rating_tugas + ' / 100');
+                    $('#nilai_kompetensi').text(data.rating_kompetensi + ' / 100');
+                    $('#rekomendasi-nilai').removeClass('d-none');
+                } else {
+                    $('#rekomendasi-nilai').addClass('d-none');
+                }
+            });
+        });
     </script>
 @endpush

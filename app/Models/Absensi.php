@@ -21,6 +21,8 @@ class Absensi extends Model
         'foto_masuk',
         'foto_pulang',
         'jarak',
+        'rating_tugas',
+        'rating_kompetensi'
     ];
 
     public function siswa()

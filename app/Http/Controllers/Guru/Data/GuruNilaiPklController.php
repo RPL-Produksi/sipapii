@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Guru\Data;
 
 use App\Http\Controllers\Controller;
+use App\Models\Absensi;
 use App\Models\Siswa;
 use App\Models\SiswaNilai;
 use Illuminate\Http\Request;
@@ -70,5 +71,26 @@ class GuruNilaiPklController extends Controller
             ->first();
 
         return response()->json($nilai);
+    }
+
+    public function getRekomendasi($id)
+    {
+        $absen = Absensi::where('siswa_id', $id)
+            ->whereNotNull('rating_tugas')
+            ->whereNotNull('rating_kompetensi')
+            ->get();
+
+        if ($absen->isEmpty()) {
+            return response()->json(['success' => false]);
+        }
+
+        $avgTugas = round($absen->avg('rating_tugas'), 2);
+        $avgKompetensi = round($absen->avg('rating_kompetensi'), 2);
+
+        return response()->json([
+            'success' => true,
+            'rating_tugas' => $avgTugas,
+            'rating_kompetensi' => $avgKompetensi,
+        ]);
     }
 }

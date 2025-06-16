@@ -81,6 +81,8 @@ class RekapAbsen extends Command
                 'foto_masuk' => $absen->foto_masuk,
                 'foto_pulang' => $absen->foto_pulang,
                 'jarak' => $absen->jarak,
+                'rating_tugas' => $absen->rating_tugas,
+                'rating_kompetensi' => $absen->rating_kompetensi
             ]);
 
             if ($absen->jam_masuk && !$absen->jam_pulang) {
