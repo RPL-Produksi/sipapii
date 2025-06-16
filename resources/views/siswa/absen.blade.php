@@ -176,13 +176,13 @@
                             <textarea name="jurnal" id="jurnal" rows="3" class="form-control" required></textarea>
                         </div>
                         <div class="form-group">
-                            <label>Rating Tugas</label>
+                            <label>Rating Tugas Yang Telah Dikerjakan</label>
                             <div id="ratingTugasStars" class="rating-star-wrapper"></div>
                             <input type="hidden" name="rating_tugas" id="ratingTugasValue" required>
                         </div>
 
                         <div class="form-group">
-                            <label>Rating Kompetensi</label>
+                            <label>Rating Kompetensi Yang Ada Dijurusan (Sesuai/Tidak)</label>
                             <div id="ratingKompetensiStars" class="rating-star-wrapper"></div>
                             <input type="hidden" name="rating_kompetensi" id="ratingKompetensiValue" required>
                         </div>
