@@ -34,7 +34,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput($request->all());
+            return redirect()->back()->withErrors($validator->errors())->withInput($request->all());
         }
 
         $user = User::where('username', $request->username)->first();
