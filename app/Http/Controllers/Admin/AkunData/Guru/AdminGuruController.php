@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\AkunData\Guru;
 
+use App\Exports\DataGuruExport;
 use App\Http\Controllers\Controller;
 use App\Imports\GuruImport;
 use App\Models\Guru;
@@ -161,5 +162,10 @@ class AdminGuruController extends Controller
 
         Excel::import(new GuruImport(), $request->file('file'));
         return redirect()->route('admin.guru')->with('success', 'Data guru berhasil diimport');
+    }
+
+    public function exportGuru()
+    {
+        return Excel::download(new DataGuruExport, 'data_guru.xlsx');
     }
 }

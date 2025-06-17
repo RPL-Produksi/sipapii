@@ -22,9 +22,9 @@
                             <div class="d-flex align-items-center justify-content-between">
                                 <h4 class="card-title">Nilai PKL Siswa</h4>
                                 <div class="float-right">
-                                    <button class="btn btn-danger">
-                                        <div class="fa-regular fa-file-pdf"></div>
-                                    </button>
+                                    <a href="{{ route('admin.siswa.nilai.export') }}" class="btn btn-danger">
+                                        <div class="fa-regular fa-file-export"></div>
+                                    </a>
                                 </div>
                             </div>
                         </div>

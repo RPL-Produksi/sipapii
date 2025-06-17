@@ -57,4 +57,9 @@ class Siswa extends Model
     {
         return $this->hasMany(Jurnal::class, 'siswa_id', 'id');
     }
+
+    public function nilai()
+    {
+        return $this->hasOne(SiswaNilai::class, 'siswa_id', 'id');
+    }
 }

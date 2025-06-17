@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\AkunData\Siswa;
 
+use App\Exports\DataSiswaExport;
 use App\Http\Controllers\Controller;
 use App\Imports\SiswaImport;
 use App\Models\Kelas;
@@ -147,5 +148,10 @@ class AdminDataSiswaController extends Controller
 
         Excel::import(new SiswaImport(), $request->file('file'));
         return redirect()->route('admin.siswa')->with('success', 'Data siswa berhasil diimport');
+    }
+
+    public function exportSiswa()
+    {
+        return Excel::download(new DataSiswaExport, 'data_siswa.xlsx');
     }
 }

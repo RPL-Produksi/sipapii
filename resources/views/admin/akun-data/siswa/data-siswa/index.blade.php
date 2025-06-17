@@ -22,10 +22,9 @@
                     <div class="d-flex align-items-center justify-content-between">
                         <h4 class="card-title">Daftar Siswa</h4>
                         <div class="float-right">
-                            <a href="{{ route('admin.siswa.form') }}" class="btn btn-success"><i
-                                    class="fa-regular fa-add"></i></a>
-                            <button data-bs-toggle="modal" data-bs-target="#importSiswaModal" class="btn btn-warning"><i
-                                    class="fa-regular fa-file-import text-white"></i></button>
+                            <a href="{{ route('admin.siswa.form') }}" class="btn btn-success"><i class="fa-regular fa-add"></i></a>
+                            <a href="{{ route('admin.siswa.export') }}" class="btn btn-danger"><i class="fa-regular fa-file-export text-white"></i></a>
+                            <button data-bs-toggle="modal" data-bs-target="#importSiswaModal" class="btn btn-warning"><i class="fa-regular fa-file-import text-white"></i></button>
                         </div>
                     </div>
                 </div>
@@ -82,7 +81,8 @@
 
     <div class="modal fade" id="importSiswaModal" tabindex="-1" role="dialog" aria-labelledby="importSiswaModalTitle"
         aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-centered modal-dialog-scrollable"
+            role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="importSiswaModalTitle">Import Data Siswa</h5>

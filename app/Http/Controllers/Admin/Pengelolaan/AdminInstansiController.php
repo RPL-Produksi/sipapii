@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Pengelolaan;
 
+use App\Exports\DataInstansiExport;
 use App\Http\Controllers\Controller;
 use App\Imports\InstansiImport;
 use App\Models\Instansi;
@@ -118,5 +119,10 @@ class AdminInstansiController extends Controller
 
         Excel::import(new InstansiImport(), $request->file('file'));
         return redirect()->back()->with('success', 'Data instansi berhasil diimport');
+    }
+
+    public function exportInstansi()
+    {
+        return Excel::download(new DataInstansiExport, 'data_instansi.xlsx');
     }
 }

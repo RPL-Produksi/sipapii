@@ -24,6 +24,9 @@
                         <div class="float-right">
                             <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addPenempatanModal"><i
                                     class="fa-regular fa-add"></i></button>
+                            <a href="{{ route('admin.pengelolaan.penempatan.export') }}" class="btn btn-danger text-white">
+                                <i class="fa-regular fa-file-export"></i>
+                            </a>
                             <button class="btn btn-warning text-white" data-bs-toggle="modal"
                                 data-bs-target="#importPenempatanModal">
                                 <i class="fa-regular fa-file-import"></i>

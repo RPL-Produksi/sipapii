@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Pengelolaan;
 
+use App\Exports\DataPembimbinganExport;
 use App\Http\Controllers\Controller;
 use App\Models\Guru;
 use App\Models\Pembimbingan;
@@ -9,6 +10,7 @@ use App\Models\Siswa;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminPembimbinganController extends Controller
 {
@@ -158,5 +160,10 @@ class AdminPembimbinganController extends Controller
         $pembimbingan->delete();
 
         return redirect()->back()->with('success', 'Pembimbingan berhasil dihapus');
+    }
+
+    public function exportPembimbingan()
+    {
+        return Excel::download(new DataPembimbinganExport, 'data_pembimbingan.xlsx');
     }
 }

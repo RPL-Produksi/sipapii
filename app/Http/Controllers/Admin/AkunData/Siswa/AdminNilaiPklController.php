@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin\AkunData\Siswa;
 
+use App\Exports\DataNilaiSiswaExport;
 use App\Http\Controllers\Controller;
 use App\Models\Siswa;
 use App\Models\SiswaNilai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminNilaiPklController extends Controller
 {
@@ -61,5 +63,10 @@ class AdminNilaiPklController extends Controller
             ->first();
 
         return response()->json($nilai);
+    }
+
+    public function exportNilai()
+    {
+        return Excel::download(new DataNilaiSiswaExport, 'data_nilai_siswa.xlsx');
     }
 }

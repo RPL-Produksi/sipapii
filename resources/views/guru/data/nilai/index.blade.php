@@ -26,9 +26,9 @@
                                         data-bs-toggle="modal">
                                         <div class="fa-regular fa-plus"></div>
                                     </button>
-                                    <button class="btn btn-danger">
-                                        <div class="fa-regular fa-file-excel"></div>
-                                    </button>
+                                    <a href="{{ route('guru.siswa.nilai.export') }}" class="btn btn-danger">
+                                        <div class="fa-regular fa-file-export"></div>
+                                    </a>
                                 </div>
                             </div>
                         </div>

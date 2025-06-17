@@ -1,5 +1,6 @@
 <?php
 
+use App\Exports\DataSiswaExport;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AkunData\Guru\AdminGuruController;
 use App\Http\Controllers\Admin\Pengelolaan\AdminPenempatanController;
@@ -23,8 +24,10 @@ use App\Http\Controllers\Siswa\SiswaDashboardController;
 use App\Http\Controllers\Siswa\SiswaJurnalController;
 use App\Http\Controllers\Siswa\SiswaProfileController;
 use App\Http\Controllers\Siswa\SiswaRiwayatController;
+use App\Imports\SiswaImport;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use Maatwebsite\Excel\Facades\Excel;
 
 Route::redirect('/', 'login');
 Route::fallback(function () {
@@ -66,6 +69,7 @@ Route::prefix('/admin')->middleware(['auth', 'role:admin'])->group(function () {
                 Route::get('/data', 'data')->name('admin.pengelolaan.instansi.data');
                 Route::get('/{id}/delete', 'delete')->name('admin.pengelolaan.instansi.delete');
                 Route::post('/import', 'importInstansi')->name('admin.pengelolaan.instansi.import');
+                Route::get('/export', 'exportInstansi')->name('admin.pengelolaan.instansi.export');
             });
         });
 
@@ -89,6 +93,7 @@ Route::prefix('/admin')->middleware(['auth', 'role:admin'])->group(function () {
                 Route::get('/data', 'data')->name('admin.pengelolaan.penempatan.data');
                 Route::get('/data/{id}', 'dataById')->name('admin.pengelolaan.penempatan.data.id');
                 Route::post('/import', 'importPenempatan')->name('admin.pengelolaan.penempatan.import');
+                Route::get('/export', 'exportPenempatan')->name('admin.pengelolaan.penempatan.export');
             });
         });
 
@@ -100,6 +105,7 @@ Route::prefix('/admin')->middleware(['auth', 'role:admin'])->group(function () {
                 Route::get('/{id}/delete', 'deletePembimbingan')->name('admin.pengelolaan.pembimbingan.delete');
                 Route::get('/data', 'data')->name('admin.pengelolaan.pembimbingan.data');
                 Route::get('/data/{id}', 'dataById')->name('admin.pengelolaan.pembimbingan.data.id');
+                Route::get('/export', 'exportPembimbingan')->name('admin.pengelolaan.pembimbingan.export');
             });
         });
     });
@@ -113,6 +119,7 @@ Route::prefix('/admin')->middleware(['auth', 'role:admin'])->group(function () {
             Route::get('/data/{id}', 'dataById')->name('admin.siswa.data.id');
             Route::get('/{id}/delete', 'delete')->name('admin.siswa.delete');
             Route::post('/import', 'importSiswa')->name('admin.siswa.import');
+            Route::get('/export', 'exportSiswa')->name('admin.siswa.export');
         });
 
         Route::prefix('/nilai')->group(function () {
@@ -120,6 +127,7 @@ Route::prefix('/admin')->middleware(['auth', 'role:admin'])->group(function () {
                 Route::get('/', 'index')->name('admin.siswa.nilai');
                 Route::post('/store/{id?}', 'store')->name('admin.siswa.nilai.store');
                 Route::get('/data/{id}', 'dataById')->name('admin.siswa.nilai.data.id');
+                Route::get('/export', 'exportNilai')->name('admin.siswa.nilai.export');
             });
         });
 
@@ -150,6 +158,7 @@ Route::prefix('/admin')->middleware(['auth', 'role:admin'])->group(function () {
             Route::get('/data', 'data')->name('admin.guru.data');
             Route::get('/data/{id}', 'dataById')->name('admin.guru.data.id');
             Route::post('/import', 'importGuru')->name('admin.guru.import');
+            Route::get('/export', 'exportGuru')->name('admin.guru.export');
         });
     });
 });
@@ -195,6 +204,7 @@ Route::prefix('/guru')->middleware(['auth', 'role:guru'])->group(function () {
                 Route::post('/store/{id?}', 'store')->name('guru.siswa.nilai.store');
                 Route::get('/data/{id}', 'dataById')->name('guru.siswa.nilai.data.id');
                 Route::get('/{id}/rekomendasi-nilai', 'getRekomendasi')->name('guru.siswa.nilai.rekomendasi');
+                Route::get('export', 'exportNilai')->name('guru.siswa.nilai.export');
             });
         });
     });

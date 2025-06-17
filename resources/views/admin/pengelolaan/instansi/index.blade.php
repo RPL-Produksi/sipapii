@@ -23,6 +23,8 @@
                         <div class="float-right">
                             <a href="{{ route('admin.pengelolaan.instansi.form') }}" class="btn btn-success"><i
                                     class="fa-regular fa-add"></i></a>
+                            <a href="{{ route('admin.pengelolaan.instansi.export') }}" class="btn btn-danger"><i
+                                    class="fa-regular fa-file-export text-white"></i></a>
                             <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#importInstansiModal"><i
                                     class="fa-regular fa-file-import text-white"></i></button>
                         </div>

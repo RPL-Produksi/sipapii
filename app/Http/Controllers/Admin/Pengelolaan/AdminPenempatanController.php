@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Pengelolaan;
 
+use App\Exports\DataPenempatanExport;
 use App\Http\Controllers\Controller;
 use App\Imports\PenempatanImport;
 use App\Models\Instansi;
@@ -162,5 +163,10 @@ class AdminPenempatanController extends Controller
 
         Excel::import(new PenempatanImport(), $request->file('file'));
         return redirect()->back()->with('success', 'Data penempatan berhasil diimport');
+    }
+
+    public function exportPenempatan()
+    {
+        return Excel::download(new DataPenempatanExport, 'data_penempatan.xlsx');
     }
 }

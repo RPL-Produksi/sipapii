@@ -23,6 +23,8 @@
                         <div class="float-right">
                             <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addGuruModal"><i
                                     class="fa-regular fa-add"></i></button>
+                            <a href="{{ route('admin.guru.export') }}" class="btn btn-danger"><i
+                                    class="fa-regular fa-file-export text-white"></i></a>
                             <button data-bs-toggle="modal" data-bs-target="#importGuruModal" class="btn btn-warning"><i
                                     class="fa-regular fa-file-import text-white"></i></button>
                         </div>

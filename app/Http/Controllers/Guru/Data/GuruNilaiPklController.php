@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Guru\Data;
 
+use App\Exports\DataNilaiSiswaExport;
 use App\Http\Controllers\Controller;
 use App\Models\Absensi;
 use App\Models\Siswa;
@@ -9,6 +10,7 @@ use App\Models\SiswaNilai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class GuruNilaiPklController extends Controller
 {
@@ -96,5 +98,10 @@ class GuruNilaiPklController extends Controller
             'nilai_soft_skill' => $persentaseHadir,
             'nilai_wirausaha' => $persentaseHadir,
         ]);
+    }
+
+    public function exportNilai()
+    {
+        return Excel::download(new DataNilaiSiswaExport, 'data_nilai_siswa.xlsx');
     }
 }
