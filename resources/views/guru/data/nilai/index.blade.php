@@ -88,15 +88,6 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-12 mb-2">
-                                <div id="rekomendasi-nilai" class="alert alert-info d-none">
-                                    <strong>Rekomendasi Nilai PKL:</strong>
-                                    <ul class="mb-0">
-                                        <li><span id="nilai_tugas">-</span> (Tugas)</li>
-                                        <li><span id="nilai_kompetensi">-</span> (Kompetensi)</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-12 mb-2">
                                 <label for="">Nama Siswa</label>
                                 <select class="choices form-select" id="siswa" name="siswa_id">
                                     <option value="" selected disabled>Pilih Siswa</option>
@@ -107,24 +98,29 @@
                             </div>
                             <div class="col-12 mb-2">
                                 <label for="">Internalisasi dan Penerapan Soft Skills</label>
+                                <small id="nilai1-rekomendasi" class="text-muted d-block mt-1"></small>
                                 <input type="text" inputmode="numeric" class="form-control" name="nilai1"
                                     placeholder="Masukkan Nilai">
                             </div>
                             <div class="col-12 mb-2">
                                 <label for="">Penerapan Hard Skills</label>
+                                <small id="nilai2-rekomendasi" class="text-muted d-block mt-1"></small>
                                 <input type="text" inputmode="numeric" class="form-control" name="nilai2"
                                     placeholder="Masukkan Nilai">
                             </div>
                             <div class="col-12 mb-2">
                                 <label for="">Peningkatan dan Pengembangan Hard Skills</label>
+                                <small id="nilai3-rekomendasi" class="text-muted d-block mt-1"></small>
                                 <input type="text" inputmode="numeric" class="form-control" name="nilai3"
                                     placeholder="Masukkan Nilai">
                             </div>
                             <div class="col-12 mb-2">
                                 <label for="">Penyiapan Kemandirian Berwirausaha</label>
+                                <small id="nilai4-rekomendasi" class="text-muted d-block mt-1"></small>
                                 <input type="text" inputmode="numeric" class="form-control" name="nilai4"
                                     placeholder="Masukkan Nilai">
                             </div>
+
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -327,12 +323,16 @@
             if (!siswaId) return;
 
             $.getJSON(`${window.location.origin}/guru/siswa/nilai/${siswaId}/rekomendasi-nilai`, (data) => {
-                if (data && data.success) {
-                    $('#nilai_tugas').text(data.rating_tugas + ' / 100');
-                    $('#nilai_kompetensi').text(data.rating_kompetensi + ' / 100');
-                    $('#rekomendasi-nilai').removeClass('d-none');
+                if (data.success) {
+                    $('#nilai1-rekomendasi').text(`Rekomendasi Nilai: ${data.nilai_soft_skill} / 100`);
+                    $('#nilai2-rekomendasi').text(`Rekomendasi Nilai: ${data.rating_tugas} / 100`);
+                    $('#nilai3-rekomendasi').text(`Rekomendasi Nilai: ${data.rating_kompetensi} / 100`);
+                    $('#nilai4-rekomendasi').text(`Rekomendasi Nilai: ${data.nilai_wirausaha} / 100`);
                 } else {
-                    $('#rekomendasi-nilai').addClass('d-none');
+                    $('#nilai1-rekomendasi').text(`Nilai rekomendasi belum tersedia`);
+                    $('#nilai2-rekomendasi').text(`Nilai rekomendasi belum tersedia`);
+                    $('#nilai3-rekomendasi').text(`Nilai rekomendasi belum tersedia`);
+                    $('#nilai4-rekomendasi').text(`Nilai rekomendasi belum tersedia`);
                 }
             });
         });

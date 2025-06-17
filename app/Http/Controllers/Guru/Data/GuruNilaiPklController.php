@@ -75,22 +75,26 @@ class GuruNilaiPklController extends Controller
 
     public function getRekomendasi($id)
     {
-        $absen = Absensi::where('siswa_id', $id)
-            ->whereNotNull('rating_tugas')
-            ->whereNotNull('rating_kompetensi')
-            ->get();
+        $absen = Absensi::where('siswa_id', $id)->get();
 
         if ($absen->isEmpty()) {
             return response()->json(['success' => false]);
         }
 
-        $avgTugas = round($absen->avg('rating_tugas'), 2);
-        $avgKompetensi = round($absen->avg('rating_kompetensi'), 2);
+        $absenRated = $absen->whereNotNull('rating_tugas')->whereNotNull('rating_kompetensi');
+        $avgTugas = $absenRated->isNotEmpty() ? round($absenRated->avg('rating_tugas'), 2) : 0;
+        $avgKompetensi = $absenRated->isNotEmpty() ? round($absenRated->avg('rating_kompetensi'), 2) : 0;
+
+        $jumlahHadir = $absen->where('status', 'Hadir')->count();
+        $totalAbsen = $absen->count();
+        $persentaseHadir = $totalAbsen > 0 ? round(($jumlahHadir / $totalAbsen) * 100, 2) : 0;
 
         return response()->json([
             'success' => true,
             'rating_tugas' => $avgTugas,
             'rating_kompetensi' => $avgKompetensi,
+            'nilai_soft_skill' => $persentaseHadir,
+            'nilai_wirausaha' => $persentaseHadir,
         ]);
     }
 }
