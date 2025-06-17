@@ -1,67 +1,226 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="title" content="InfyBonus">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>No Internet</title>
+        <style>
+            :root {
+                --blue: #435ebe;
 
-    <style>
-        .error_body {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            height: 100vh;
-            width: 100%;
-            background: #f9f9f9;
-        }
+                --bg-light: #f9f9f9;
+                --text-light: #2e2e2e;
+                --subtext-light: #6b6b6b;
 
-        .error_container .error_heading {
-            color: transparent;
-            font-size: 160px;
-            margin: 0;
-            font-weight: 900;
-            letter-spacing: 20px;
-            background-size: 100% 100%;
-            background: linear-gradient(90deg, #6b719b 38%, #9da3cc 53%, #979dce 65%);
-            -webkit-background-clip: text;
-            -moz-background-clip: text;
-            -ms-background-clip: text;
-        }
-
-        @media (max-width: 540px) {
-            .error_container .error_heading {
-                font-size: 120px;
-                letter-spacing: 10px;
+                --bg-dark: #1f1f2f;
+                --text-dark: #ffffff;
+                --subtext-dark: #a0a0b0;
             }
-        }
 
-        .error_container .error_btn {
-            background-color: #6e749e !important;
-            border: none;
-            outline: none;
-        }
+            [data-theme="light"] {
+                --bg: var(--bg-light);
+                --text: var(--text-light);
+                --subtext: var(--subtext-light);
+            }
 
-        .error_container .error_btn:focus {
-            box-shadow: none !important;
-        }
+            [data-theme="dark"] {
+                --bg: var(--bg-dark);
+                --text: var(--text-dark);
+                --subtext: var(--subtext-dark);
+            }
 
-        .error_container .error_message,
-        .error_container .error_paragraph {
-            color: #787878;
-        }
-    </style>
-</head>
-<body>
-<div class="error_body">
-    <div
-        class="container error_container d-flex justify-content-center align-items-center flex-column w-100 h-100 p-5 text-center">
-        <h2 class="error_message text-center mb-3">Boo! You don't have an internet connection</h2>
-        <p class="error_paragraph text-center mb-5">
-            Please check your network connection and try again.
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "Segoe UI", sans-serif;
+            }
+
+            body {
+                background-color: var(--bg);
+                color: var(--text);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+                text-align: center;
+                padding: 2rem;
+                transition: all 0.3s ease;
+                position: relative;
+            }
+
+            h1 {
+                font-size: 3.5rem;
+                background: linear-gradient(90deg, #6b719b, #9da3cc, #979dce);
+                background-clip: text;
+                -webkit-background-clip: text;
+                color: transparent;
+                font-weight: 900;
+                letter-spacing: 5px;
+            }
+
+            p {
+                font-size: 1rem;
+                color: var(--subtext);
+                margin: 1rem 0 2rem;
+            }
+
+            a,
+            button {
+                text-decoration: none;
+                padding: 0.8rem 1.5rem;
+                background-color: var(--blue);
+                color: white;
+                border-radius: 8px;
+                font-weight: bold;
+                transition: background 0.3s ease;
+                border: none;
+                cursor: pointer;
+            }
+
+            a:hover,
+            button:hover {
+                background-color: #3548a1;
+            }
+
+            .theme-toggle {
+                display: flex;
+                gap: 0.5rem;
+                align-items: center;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+
+            .form-switch input[type="checkbox"] {
+                width: 2.5rem;
+                height: 1.3rem;
+                background-color: #ccc;
+                border-radius: 1rem;
+                appearance: none;
+                position: relative;
+                cursor: pointer;
+                outline: none;
+                transition: background 0.3s ease;
+            }
+
+            .form-switch input[type="checkbox"]::before {
+                content: "";
+                width: 1rem;
+                height: 1rem;
+                background: white;
+                border-radius: 50%;
+                position: absolute;
+                top: 0.15rem;
+                left: 0.2rem;
+                transition: 0.3s ease;
+            }
+
+            .form-switch input[type="checkbox"]:checked {
+                background-color: var(--blue);
+            }
+
+            .form-switch input[type="checkbox"]:checked::before {
+                transform: translateX(1.2rem);
+            }
+
+            .btn-group {
+                display: flex;
+                gap: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            @media (max-width: 540px) {
+                h1 {
+                    font-size: 2.5rem;
+                    letter-spacing: 2px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="theme-toggle">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 21 21"
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <path
+                    d="M10.5 14.5c2.219 0 4-1.763 4-3.982a4.003 4.003 0 0 0-4-4.018c-2.219 0-4 1.781-4 4c0 2.219 1.781 4 4 4zM4.136 4.136L5.55 5.55m9.9 9.9l1.414 1.414M1.5 10.5h2m14 0h2M4.135 16.863L5.55 15.45m9.899-9.9l1.414-1.415M10.5 19.5v-2m0-14v-2"
+                    opacity=".3"
+                ></path>
+            </svg>
+            <div class="form-switch fs-6">
+                <input type="checkbox" id="toggle-dark" />
+            </div>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+            >
+                <path
+                    d="m17.75 4.09l-2.53 1.94l.91 3.06l-2.63-1.81l-2.63 1.81l.91-3.06l-2.53-1.94L12.44 4l1.06-3l1.06 3l3.19.09m3.5 6.91l-1.64 1.25l.59 1.98l-1.7-1.17l-1.7 1.17l.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95l2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85c-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14c.4-.4.82-.76 1.27-1.08c.75-.53 1.93.36 1.85 1.19c-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82c-2.81 3.14-2.7 7.96.31 10.98c3.02 3.01 7.84 3.12 10.98.31Z"
+                ></path>
+            </svg>
+        </div>
+
+        <h1>Oops!</h1>
+        <p>
+            No internet connection detected. Please check your network and try
+            again.
         </p>
-        <a href="/" class="btn btn-primary error_btn">Back to Home Page</a>
-    </div>
-</div>
-</body>
+
+        <div class="btn-group">
+            <a href="/">Back to Home</a>
+            <button id="refresh-btn">Try Again</button>
+        </div>
+
+        <script>
+            const toggle = document.getElementById("toggle-dark");
+            const html = document.documentElement;
+
+            function setTheme(theme) {
+                html.setAttribute("data-theme", theme);
+                localStorage.setItem("theme", theme);
+                toggle.checked = theme === "dark";
+            }
+
+            (function () {
+                const savedTheme = localStorage.getItem("theme");
+                if (savedTheme) {
+                    setTheme(savedTheme);
+                } else {
+                    const prefersDark = window.matchMedia(
+                        "(prefers-color-scheme: dark)"
+                    ).matches;
+                    setTheme(prefersDark ? "dark" : "light");
+                }
+            })();
+
+            toggle.addEventListener("change", function () {
+                setTheme(this.checked ? "dark" : "light");
+            });
+
+            document
+                .getElementById("refresh-btn")
+                .addEventListener("click", function () {
+                    location.reload();
+                });
+
+            setInterval(() => {
+                if (navigator.onLine) {
+                    window.location.href = "/";
+                }
+            }, 2000);
+        </script>
+    </body>
 </html>
