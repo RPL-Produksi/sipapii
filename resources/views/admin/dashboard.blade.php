@@ -93,7 +93,7 @@
                                     <h4>Statistik Absensi</h4>
                                 </div>
                                 <div class="card-body">
-                                    <div id="chart-profile-visit"></div>
+                                    <div id="chart-absensi-siswa"></div>
                                 </div>
                             </div>
                         </div>
@@ -171,8 +171,6 @@
 @push('js')
     {{-- JS Only For This Page --}}
     <script src="{{ asset('assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('assets/static/js/pages/dashboard.js') }}"></script>
-
     <script src="{{ asset('assets/extensions/datatables.net-responsive-bs5/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/extensions/datatables.net-responsive-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('assets/extensions/datatables.net-responsive-bs5/js/dataTables.responsive.min.js') }}"></script>
@@ -228,5 +226,57 @@
             }
         )
         chartPklDomisili.render();
+    </script>
+    <script>
+        const absenMasuk = @json($masukData);
+        const absenPulang = @json($pulangData);
+
+        var optionsAbsensiSiswa = {
+            annotations: {
+                position: "back",
+            },
+            dataLabels: {
+                enabled: false,
+            },
+            chart: {
+                type: "bar",
+                height: 300,
+            },
+            fill: {
+                opacity: 1,
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '55%',
+                    endingShape: 'rounded',
+                }
+            },
+            series: [{
+                    name: "Masuk",
+                    data: absenMasuk,
+                },
+                {
+                    name: "Pulang",
+                    data: absenPulang,
+                }
+            ],
+            colors: ["#435ebe", "#55c6e8"],
+            xaxis: {
+                categories: [
+                    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+                ],
+            },
+            legend: {
+                position: 'top'
+            }
+        };
+
+        var chartAbsensiSiswa = new ApexCharts(
+            document.querySelector("#chart-absensi-siswa"),
+            optionsAbsensiSiswa
+        );
+        chartAbsensiSiswa.render();
     </script>
 @endpush

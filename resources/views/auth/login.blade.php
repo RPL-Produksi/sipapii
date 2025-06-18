@@ -3,6 +3,14 @@
 
 @push('css')
     {{-- CSS Only For This Page --}}
+    <style>
+        .auth-right {
+            background: linear-gradient(to right, #2c3e50, #3498db);
+            /* atau sesuai tema kamu */
+            color: white;
+            padding: 40px;
+        }
+    </style>
 @endpush
 
 @section('content-left')
@@ -44,9 +52,38 @@
 @endsection
 
 @section('content-right')
+    <div class="h-100 d-flex flex-column align-items-center justify-content-center text-white px-4">
+        <img src="{{ asset('assets/static/images/auth-illustrations.png') }}" alt="Ilustrasi Login"
+            style="max-width: 80%; margin-bottom: 20px;">
 
+        <h4 class="text-white">Selamat Datang di SIPAPII</h4>
+        <p class="text-white text-center mt-2">
+            Sistem Informasi Praktik Anak Pada Instansi dan Industri <br>
+            Membantu memonitor kegiatan PKL dengan efisien dan akurat.
+        </p>
+
+        <div class="mt-4 small text-white-50 text-center">
+            <h4 id="quoteText" class="text-white" style="font-style: italic;">Sedang mengambil kutipan...</h4>
+            {{-- <p>Butuh bantuan? Hubungi Admin:</p>
+            <p>
+                <i class="bi bi-envelope me-1"></i> admin@smkn2smi.sch.id <br>
+                <i class="bi bi-phone me-1"></i> (0266) 123456
+            </p> --}}
+        </div>
+    </div>
 @endsection
 
 @push('js')
     {{-- JS Only For This Page --}}
+    <script>
+        fetch('https://api.quotable.io/random')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('quoteText').innerText = `“${data.content}”`;
+            })
+            .catch(err => {
+                document.getElementById('quoteText').innerText = '“Gagal mengambil quote. Silakan coba lagi nanti.”';
+                console.error(err);
+            });
+    </script>
 @endpush
