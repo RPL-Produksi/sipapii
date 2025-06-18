@@ -203,8 +203,13 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group text-center">
-                        <img src="{{ @$siswa->pembimbingan->pembimbing->user->profile_picture }}" alt=""
-                            class="img-fluid rounded-circle" width="250" height="250">
+                        @if (@$siswa->pembimbingan->pembimbing->user->profile_picture == null)
+                            <img src="{{ asset('assets/static/images/faces/1.jpg') }}" alt=""
+                                class="img-fluid w-50 rounded-circle font-weight-bold">
+                        @else
+                            <img src="{{ @$siswa->pembimbingan->pembimbing->user->profile_picture }}" alt=""
+                                class="img-fluid w-50 rounded-circle font-weight-bold">
+                        @endif
                     </div>
                     <div class="form-group">
                         <label for="nip">NIP Pembimbing</label>
@@ -240,8 +245,13 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group text-center">
-                        <img src="{{ @$siswa->pembimbingan->guruMapelPKL->user->profile_picture }}" alt=""
-                            class="img-fluid rounded-circle" width="250" height="250">
+                        @if (@$siswa->pembimbingan->guruMapelPKL->user->profile_picture == null)
+                            <img src="{{ asset('assets/static/images/faces/1.jpg') }}" alt=""
+                                class="img-fluid w-50 rounded-circle font-weight-bold">
+                        @else
+                            <img src="{{ @$siswa->pembimbingan->guruMapelPKL->user->profile_picture }}" alt=""
+                                class="img-fluid w-50 rounded-circle font-weight-bold">
+                        @endif
                     </div>
                     <div class="form-group">
                         <label for="nip">NIP Guru Mapel PKL</label>

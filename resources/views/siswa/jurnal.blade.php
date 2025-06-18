@@ -12,18 +12,23 @@
             @include('template.feedback')
 
             <div class="col-12">
-                <form method="GET" action="{{ route('siswa.jurnal.export') }}" target="_blank" class="mb-3">
-                    <div class="input-group">
-                        <input type="text" name="instruktur" class="form-control" placeholder="Nama Instruktur" required>
-                        <button type="submit" class="btn btn-danger">Export PDF</button>
-                    </div>
-                </form>
 
             </div>
 
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+                        <form method="GET" action="{{ route('siswa.jurnal.export') }}" target="_blank" class="mb-3">
+                            <h5>Export Jurnal</h3>
+                                <div class="input-group">
+                                    <input type="text" name="instruktur" class="form-control"
+                                        placeholder="Nama Instruktur" required>
+                                    <button type="submit" class="btn btn-danger"><i
+                                            class="fa-regular fa-file-pdf"></i></button>
+                                </div>
+                        </form>
+                    </div>
+                    <div class="card-footer">
                         <form method="GET" action="{{ route('siswa.jurnal') }}">
                             <div class="row">
                                 <div class="col-6">
@@ -105,53 +110,54 @@
 
             </div>
         </div>
+    </div>
 
-        <div style="margin-bottom: 7rem;"></div>
+    <div style="margin-bottom: 7rem;"></div>
 
-        <div class="modal fade" id="editJurnalModal" tabindex="-1" role="dialog" aria-labelledby="editJurnalModalTitle"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editJurnalModalTitle">Edit Jurnal</h5>
-                    </div>
-                    <form action="" method="POST" id="editJurnalForm">
-                        @csrf
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="">Deskripsi Jurnal</label>
-                                <textarea name="deskripsi_jurnal" class="form-control" id="deskripsiJurnal" rows="10"></textarea>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn" data-bs-dismiss="modal">
-                                <span>Batal</span>
-                            </button>
-                            <button type="submit" class="btn btn-primary">
-                                <span>Ubah</span>
-                            </button>
-                        </div>
-                    </form>
+    <div class="modal fade" id="editJurnalModal" tabindex="-1" role="dialog" aria-labelledby="editJurnalModalTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editJurnalModalTitle">Edit Jurnal</h5>
                 </div>
+                <form action="" method="POST" id="editJurnalForm">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="">Deskripsi Jurnal</label>
+                            <textarea name="deskripsi_jurnal" class="form-control" id="deskripsiJurnal" rows="10"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn" data-bs-dismiss="modal">
+                            <span>Batal</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <span>Ubah</span>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
-    @endsection
+    </div>
+@endsection
 
-    @push('js')
-        {{-- JS Only For This Page --}}
-        <script src="{{ asset('assets/extensions/toastify-js/src/toastify.js') }}"></script>
-        <script>
-            const editJurnal = (id) => {
-                $.getJSON(`${window.location.origin}/siswa/jurnal/data/${id}`, (data) => {
-                    const updateUrl = '{{ route('siswa.jurnal.edit', ':id') }}'
-                    $('#editJurnalForm').attr('action', updateUrl.replace(':id', id));
+@push('js')
+    {{-- JS Only For This Page --}}
+    <script src="{{ asset('assets/extensions/toastify-js/src/toastify.js') }}"></script>
+    <script>
+        const editJurnal = (id) => {
+            $.getJSON(`${window.location.origin}/siswa/jurnal/data/${id}`, (data) => {
+                const updateUrl = '{{ route('siswa.jurnal.edit', ':id') }}'
+                $('#editJurnalForm').attr('action', updateUrl.replace(':id', id));
 
 
-                    $('#deskripsiJurnal').val(data.deskripsi_jurnal);
+                $('#deskripsiJurnal').val(data.deskripsi_jurnal);
 
-                    const myModal = new bootstrap.Modal(document.getElementById('editJurnalModal'));
-                    myModal.show();
-                })
-            }
-        </script>
-    @endpush
+                const myModal = new bootstrap.Modal(document.getElementById('editJurnalModal'));
+                myModal.show();
+            })
+        }
+    </script>
+@endpush

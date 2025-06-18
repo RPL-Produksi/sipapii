@@ -39,7 +39,8 @@ border-primary"
             <p class="fw-bold">Jurnal</p>
         </div>
     </a>
-    <a href="{{ $absen_url }}" class="row d-flex align-items-center justify-content-center text-center w-100 {{ @$menu_type == 'absen' ? 'nav-link' : '' }}"
+    <a href="{{ $absen_url }}"
+        class="row d-flex align-items-center justify-content-center text-center w-100 {{ @$menu_type == 'absen' ? 'nav-link' : '' }}"
         style="height: 45px">
         <div class="col">
             <i class="fa-regular fa-camera fs-4"></i>

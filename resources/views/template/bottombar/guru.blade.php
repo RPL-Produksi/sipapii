@@ -10,20 +10,20 @@
         </div>
     </a>
 
-    <div class="dropup text-center w-100">
-        <a href="#"
-            class="row d-flex align-items-center justify-content-center text-center w-100 {{ @$menu_type == 'absen' ? 'nav-link' : '' }}"
-            style="height: 45px" data-bs-toggle="dropdown" aria-expanded="false">
-            <div class="col">
-                <i class="fa-regular fa-check-to-slot fs-4"></i>
-                <p class="fw-bold">Absensi Siswa</p>
-            </div>
-        </a>
-        <ul class="dropdown-menu">
-            <li><a class="dropdown-item {{ @$submenu_type == 'absensi' ? 'active' : '' }}" href="{{ route('guru.siswa.absen', ['type' => 'data']) }}">Data Absensi</a></li>
-            <li><a class="dropdown-item {{ @$submenu_type == 'rekap' ? 'active' : '' }}" href="{{ route('guru.siswa.absen', ['type' => 'rekap']) }}">Rekap Absensi</a></li>
-        </ul>
-    </div>
+    <a href="#"
+        class="row d-flex align-items-center justify-content-center text-center w-100 {{ @$menu_type == 'absen' ? 'nav-link' : '' }}"
+        style="height: 45px" data-bs-toggle="dropdown" aria-expanded="false">
+        <div class="col">
+            <i class="fa-regular fa-check-to-slot fs-4"></i>
+            <p class="fw-bold">Absensi Siswa</p>
+        </div>
+    </a>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item {{ @$submenu_type == 'absensi' ? 'active' : '' }}"
+                href="{{ route('guru.siswa.absen', ['type' => 'data']) }}">Data Absensi</a></li>
+        <li><a class="dropdown-item {{ @$submenu_type == 'rekap' ? 'active' : '' }}"
+                href="{{ route('guru.siswa.absen', ['type' => 'rekap']) }}">Rekap Absensi</a></li>
+    </ul>
 
 
     <a href="{{ route('guru.siswa.jurnal') }}"
