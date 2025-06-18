@@ -40,7 +40,6 @@ class AdminDataSiswaController extends Controller
             'nis' => 'required',
             'jenis_kelamin',
             'kelas_id' => 'required',
-            'tahun_ajar_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -54,13 +53,15 @@ class AdminDataSiswaController extends Controller
             'role' => 'siswa',
         ]);
 
+        $kelas = Kelas::where('id', $request->kelas_id)->first();
+
         if ($user) {
             Siswa::updateOrCreate(['user_id' => $user->id], [
                 'user_id' => $user->id,
                 'nis' => $request->nis,
                 'jenis_kelamin' => $request->jenis_kelamin,
-                'kelas_id' => $request->kelas_id,
-                'tahun_ajar_id' => $request->tahun_ajar_id,
+                'kelas_id' => $kelas->id,
+                'tahun_ajar_id' => $kelas->tahunAjar->id,
             ]);
         }
 

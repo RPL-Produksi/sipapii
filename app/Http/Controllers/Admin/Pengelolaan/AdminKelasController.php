@@ -5,18 +5,21 @@ namespace App\Http\Controllers\Admin\Pengelolaan;
 use App\Http\Controllers\Controller;
 use App\Imports\KelasImport;
 use App\Models\Kelas;
+use App\Models\TahunAjar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 
 class AdminKelasController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-        return view('admin.pengelolaan.kelas.index', [], ['menu_type' => 'pengelolaan-kelas']);
+        $data['tahunAjar'] = TahunAjar::find($id);
+
+        return view('admin.pengelolaan.kelas.index', [], ['menu_type' => 'pengelolaan-tahun-ajar'])->with($data);
     }
 
-    public function data(Request $request)
+    public function data(Request $request, $id)
     {
         $length = intval($request->input('length', 15));
         $start = intval($request->input('start', 0));
@@ -24,7 +27,7 @@ class AdminKelasController extends Controller
         $columns = $request->input('columns');
         $order = $request->input('order');
 
-        $data = Kelas::query();
+        $data = Kelas::query()->where('tahun_ajar_id', $id)->with('tahunAjar');
 
         if (!empty($order)) {
             $order = $order[0];
@@ -63,17 +66,17 @@ class AdminKelasController extends Controller
     }
 
 
-    public function dataById($id)
+    public function dataById($id, $kelasId)
     {
-        $kelas = Kelas::find($id);
+        $kelas = Kelas::where('id', $kelasId)->where('tahun_ajar_id', $id)->with('tahunAjar')->first();
 
         return response()->json($kelas);
     }
 
-    public function addKelas(Request $request)
+    public function addKelas(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'nama' => 'required'
+            'nama' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -82,37 +85,39 @@ class AdminKelasController extends Controller
 
         $kelas = new Kelas();
         $kelas->nama = $request->nama;
+        $kelas->tahun_ajar_id = $id;
         $kelas->save();
 
         return redirect()->back()->with('success', 'Data kelas berhasil ditambahkan');
     }
 
-    public function editKelas(Request $request, $id)
+    public function editKelas(Request $request, $id, $kelasId)
     {
         $validator = Validator::make($request->all(), [
-            'nama' => 'required'
+            'nama' => 'required',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput($request->all());
         }
 
-        $kelas = Kelas::find($id);
+        $kelas = Kelas::find($kelasId);
         $kelas->nama = $request->nama;
+        $kelas->tahun_ajar_id = $id;
         $kelas->save();
 
         return redirect()->back()->with('success', 'Data kelas berhasil diubah');
     }
 
-    public function deleteKelas($id)
+    public function deleteKelas($id, $kelasId)
     {
-        $kelas = Kelas::find($id);
+        $kelas = Kelas::where('id', $kelasId)->where('tahun_ajar_id', $id)->first();
         $kelas->delete();
 
         return redirect()->back()->with('success', 'Data kelas berhasil dihapus');
     }
 
-    public function importKelas(Request $request)
+    public function importKelas(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
             'file' => 'required|file|mimes:csv,xls,xlsx'
@@ -122,7 +127,7 @@ class AdminKelasController extends Controller
             return redirect()->back()->withErrors($validator)->withInput($request->all());
         }
 
-        Excel::import(new KelasImport(), $request->file('file'));
+        Excel::import(new KelasImport($id), $request->file('file'));
         return redirect()->back()->with('success', 'Data kelas berhasil diimport');
     }
 }

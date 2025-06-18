@@ -109,4 +109,19 @@ class AdminTahunAjarController extends Controller
 
         return redirect()->back()->with('success', 'Data tahun ajar berhasil dihapus');
     }
+
+    public function alumni(Request $request, $id)
+    {
+        $query = $request->query('type');
+        $tahunAjar = TahunAjar::where('id', $id)->first();
+
+        if ($query === 'aktif') {
+            $tahunAjar->is_alumni = true;
+        } else {
+            $tahunAjar->is_alumni = false;
+        }
+        $tahunAjar->save();
+
+        return redirect()->back()->with('success', 'Status alumni berhasil diubah');
+    }
 }

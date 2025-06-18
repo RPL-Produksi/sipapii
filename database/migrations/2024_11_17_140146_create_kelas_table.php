@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('kelas', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignUuid('tahun_ajar_id')->constrained()->cascadeOnDelete();
             $table->string('nama');
             $table->timestamps();
         });

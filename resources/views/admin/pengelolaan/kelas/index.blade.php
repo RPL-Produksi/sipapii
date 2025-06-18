@@ -9,6 +9,7 @@
         rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/extensions/sweetalert2/sweetalert2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/extensions/filepond/filepond.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/extensions/choices.js/public/assets/styles/choices.css') }}">
 @endpush
 
 @section('content')
@@ -19,7 +20,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex align-items-center justify-content-between">
-                        <h4 class="card-title">Daftar Kelas</h4>
+                        <h4 class="card-title">Daftar Kelas - {{ $tahunAjar->tahun_ajar }}</h4>
                         <div class="float-right">
                             <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addKelasModal"><i
                                     class="fa-regular fa-add"></i></button>
@@ -34,6 +35,7 @@
                             <tr>
                                 <th class="text-center">No</th>
                                 <th>Nama</th>
+                                <th>Tahun Ajar</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -46,12 +48,12 @@
 
     <div class="modal fade" id="addKelasModal" tabindex="-1" role="dialog" aria-labelledby="addKelasModalTitle"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addKelasModalTitle">Tambah Kelas</h5>
                 </div>
-                <form action="{{ route('admin.pengelolaan.kelas.add') }}" method="POST">
+                <form action="{{ route('admin.pengelolaan.tahun-ajar.kelas.add', $tahunAjar->id) }}" method="POST">
                     <div class="modal-body">
                         @csrf
                         <div class="form-group">
@@ -107,7 +109,8 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="importKelasModalTitle">Import Data Kelas</h5>
                 </div>
-                <form action="{{ route('admin.pengelolaan.kelas.import') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.pengelolaan.tahun-ajar.kelas.import', $tahunAjar->id) }}" method="POST"
+                    enctype="multipart/form-data">
                     <div class="modal-body">
                         @csrf
                         <div class="form-group">
@@ -157,8 +160,6 @@
             </div>
         </div>
     </div>
-
-
 @endsection
 
 @push('js')
@@ -170,14 +171,33 @@
     <script src="{{ asset('assets/extensions/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('assets/extensions/sweetalert2/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('assets/extensions/filepond/filepond.js') }}"></script>
+    <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
+    <script>
+        let choices = document.querySelectorAll(".choices")
+        let initChoice
+        for (let i = 0; i < choices.length; i++) {
+            if (choices[i].classList.contains("multiple-remove")) {
+                initChoice = new Choices(choices[i], {
+                    delimiter: ",",
+                    editItems: true,
+                    maxItemCount: -1,
+                    removeItemButton: true,
+                })
+            } else {
+                initChoice = new Choices(choices[i])
+            }
+        }
+    </script>
     <script>
         $(document).ready(function() {
+            let url = '{{ route('admin.pengelolaan.tahun-ajar.kelas.data', ':id') }}'
+
             $('#table-1').DataTable({
                 responsive: true,
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ route('admin.pengelolaan.kelas.data') }}",
+                    url: url.replace(':id', '{{ $tahunAjar->id }}'),
                     data: function(e) {
                         return e;
                     }
@@ -197,6 +217,10 @@
                     {
                         data: 'nama',
                         orderable: true,
+                    },
+                    {
+                        data: 'tahun_ajar.tahun_ajar',
+                        orderable: false,
                     },
                     {
                         data: 'id',
@@ -231,10 +255,12 @@
     </script>
     <script>
         const edit = (id) => {
-            $.getJSON(`${window.location.origin}/admin/pengelolaan/kelas/data/${id}`, (data) => {
-                const updateUrl = `{{ route('admin.pengelolaan.kelas.edit', ':id') }}`
+            $.getJSON(`${window.location.origin}/admin/pengelolaan/tahun-ajar/{{ $tahunAjar->id }}/kelas/data/${id}`, (
+                data) => {
+                const updateUrl = `{{ route('admin.pengelolaan.tahun-ajar.kelas.edit', [':id', ':kelasId']) }}`
 
-                $('#editKelasForm').attr('action', updateUrl.replace(':id', id))
+                $('#editKelasForm').attr('action', updateUrl.replace(':id', '{{ $tahunAjar->id }}').replace(
+                    ':kelasId', id))
                 $('#edit-nama-kelas').val(data.nama);
 
                 const myModal = new bootstrap.Modal(document.getElementById('editKelasModal'));
@@ -243,7 +269,7 @@
         }
 
         const confirmDelete = (id) => {
-            const deleteUrl = "{{ route('admin.pengelolaan.kelas.delete', ':id') }}"
+            const deleteUrl = "{{ route('admin.pengelolaan.tahun-ajar.kelas.delete', [':id', ':kelasId']) }}"
 
             Swal.fire({
                 title: 'Apakah Anda yakin?',
@@ -254,7 +280,8 @@
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = deleteUrl.replace(':id', id);
+                    window.location.href = deleteUrl.replace(':id', '{{ $tahunAjar->id }}').replace(':kelasId',
+                        id);
                     Swal.fire("Success, Kelas berhasil dihapus!", {
                         icon: "success",
                     });

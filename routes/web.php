@@ -49,18 +49,6 @@ Route::prefix('/admin')->middleware(['auth', 'role:admin'])->group(function () {
     });
 
     Route::prefix('/pengelolaan')->group(function () {
-        Route::controller(AdminKelasController::class)->group(function () {
-            Route::prefix('/kelas')->group(function () {
-                Route::get('/', 'index')->name('admin.pengelolaan.kelas');
-                Route::post('/add', 'addKelas')->name('admin.pengelolaan.kelas.add');
-                Route::post('/{id}/edit', 'editKelas')->name('admin.pengelolaan.kelas.edit');
-                Route::get('/{id}/delete', 'deleteKelas')->name('admin.pengelolaan.kelas.delete');
-                Route::get('/data', 'data')->name('admin.pengelolaan.kelas.data');
-                Route::get('/data/{id}', 'dataById')->name('admin.pengelolaan.kelas.data.id');
-                Route::post('/import', 'importKelas')->name('admin.pengelolaan.kelas.import');
-            });
-        });
-
         Route::controller(AdminInstansiController::class)->group(function () {
             Route::prefix('/instansi')->group(function () {
                 Route::get('/', 'index')->name('admin.pengelolaan.instansi');
@@ -73,14 +61,25 @@ Route::prefix('/admin')->middleware(['auth', 'role:admin'])->group(function () {
             });
         });
 
-        Route::controller(AdminTahunAjarController::class)->group(function () {
-            Route::prefix('/tahun-ajar')->group(function () {
+        Route::prefix('/tahun-ajar')->group(function () {
+            Route::controller(AdminTahunAjarController::class)->group(function () {
                 Route::get('/', 'index')->name('admin.pengelolaan.tahun-ajar');
                 Route::post('/add', 'addTahunAjar')->name('admin.pengelolaan.tahun-ajar.add');
                 Route::post('/{id}/edit', 'editTahunAjar')->name('admin.pengelolaan.tahun-ajar.edit');
                 Route::get('/{id}/delete', 'deleteTahunAjar')->name('admin.pengelolaan.tahun-ajar.delete');
                 Route::get('/data', 'data')->name('admin.pengelolaan.tahun-ajar.data');
                 Route::get('/data/{id}', 'dataById')->name('admin.pengelolaan.tahun-ajar.data.id');
+                Route::get('/{id}/alumni', 'alumni')->name('admin.pengelolaan.tahun-ajar.alumni');
+            });
+
+            Route::controller(AdminKelasController::class)->group(function () {
+                Route::get('/{id}/kelas', 'index')->name('admin.pengelolaan.tahun-ajar.kelas');
+                Route::post('/{id}/kelas/add', 'addKelas')->name('admin.pengelolaan.tahun-ajar.kelas.add');
+                Route::post('/{id}/kelas/{kelasId}/edit', 'editKelas')->name('admin.pengelolaan.tahun-ajar.kelas.edit');
+                Route::get('/{id}/kelas/{kelasId}/delete', 'deleteKelas')->name('admin.pengelolaan.tahun-ajar.kelas.delete');
+                Route::get('/{id}/kelas/data', 'data')->name('admin.pengelolaan.tahun-ajar.kelas.data');
+                Route::get('/{id}/kelas/data/{kelasId}', 'dataById')->name('admin.pengelolaan.kelas.data.id');
+                Route::post('/{id}/kelas/import', 'importKelas')->name('admin.pengelolaan.tahun-ajar.kelas.import');
             });
         });
 

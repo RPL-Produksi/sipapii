@@ -47,7 +47,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-12">
+                                <div class="ol-12">
                                     <div class="form-group">
                                         <label for="kelas_id">Kelas</label>
                                         <select class="choices form-select" name="kelas_id" id="kelas_id" required>
@@ -60,23 +60,10 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="tahun_ajar">Tahun Ajar</label>
-                                        <select class="choices form-select" name="tahun_ajar_id" required id="tahun_ajar">
-                                            <option value="" @selected(old('tahun_ajar_id', @$siswa->tahun_ajar_id) == '') disabled>Pilih Tahun Ajar
-                                            </option>
-                                            @foreach ($tahunAjar as $item)
-                                                <option value="{{ $item->id }}" @selected(old('tahun_ajar_id', @$siswa->tahun_ajar_id) == $item->id)>
-                                                    {{ $item->tahun_ajar }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
                                 <div class="col-12 d-flex justify-content-end mt-3">
-                                    <a href="{{ route('admin.siswa') }}" type="button"
-                                        class="btn  me-1 mb-1">Batal</a>
-                                    <button type="submit" class="btn btn-primary me-1 mb-1">{{ $siswa ? "Ubah" : 'Tambah'}}</button>
+                                    <a href="{{ route('admin.siswa') }}" type="button" class="btn  me-1 mb-1">Batal</a>
+                                    <button type="submit"
+                                        class="btn btn-primary me-1 mb-1">{{ $siswa ? 'Ubah' : 'Tambah' }}</button>
                                 </div>
                             </div>
                         </form>
