@@ -235,6 +235,7 @@ Route::prefix('/siswa')->middleware(['auth', 'role:siswa'])->group(function () {
             Route::get('/', 'index')->name('siswa.jurnal');
             Route::post('/{id}/edit', 'editJurnal')->name('siswa.jurnal.edit');
             Route::get('/data/{id}', 'dataById')->name('siswa.jurnal.data.id');
+            Route::get('export', 'exportJurnal')->name('siswa.jurnal.export');
         });
     });
 
