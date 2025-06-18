@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Siswa;
 
 use App\Http\Controllers\Controller;
 use App\Models\Jurnal;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,28 +14,20 @@ class SiswaJurnalController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Jurnal::orderBy('created_at', 'DESC')
+        $query = Jurnal::orderBy('tanggal', 'DESC')
             ->where('siswa_id', Auth::user()->siswa->id);
 
-        if ($request->has('tanggal_awal') && $request->has('tanggal_akhir')) {
-            $tanggalAwal = Carbon::parse($request->tanggal_awal)->format('d-m-Y');
-            $tanggalAkhir = Carbon::parse($request->tanggal_akhir)->format('d-m-Y');
-
+        if ($request->filled('tanggal_awal') && $request->filled('tanggal_akhir')) {
             $query->whereBetween('tanggal', [
-                $tanggalAwal,
-                $tanggalAkhir,
+                $request->tanggal_awal,
+                $request->tanggal_akhir,
             ]);
         }
 
-        $data['jurnal'] = $query->paginate(10);
-
-        $data['jurnal']->getCollection()->transform(function ($jurnal) {
-            $jurnal->tanggal = Carbon::parse($jurnal->tanggal)->locale('id')->isoFormat('dddd, D MMMM YYYY');
-            return $jurnal;
-        });
-
-        return view('siswa.jurnal', [], ['menu_type' => 'jurnal'])->with($data);
+        $data['jurnal'] = $query->paginate(16)->withQueryString();
+        return view('siswa.jurnal', ['menu_type' => 'jurnal'] + $data);
     }
+
 
     public function editJurnal(Request $request, $id)
     {
@@ -64,5 +57,27 @@ class SiswaJurnalController extends Controller
         $jurnal = Jurnal::find($id);
 
         return response()->json($jurnal);
+    }
+
+    public function exportJurnal(Request $request)
+    {
+        $user = Auth::user();
+        $siswa = $user->siswa;
+
+        $instruktur = $request->input('instruktur') ?? '______________';
+
+        $jurnal = Jurnal::where('siswa_id', $siswa->id)
+            ->orderBy('tanggal', 'asc')
+            ->get()
+            ->groupBy(fn($item) => Carbon::parse($item->tanggal)->translatedFormat('F Y'));
+
+        $pdf = Pdf::loadView('siswa.export.jurnal', [
+            'siswa' => $siswa,
+            'user' => $user,
+            'instruktur' => $instruktur,
+            'jurnal' => $jurnal,
+        ])->setPaper('A4', 'portrait');
+
+        return $pdf->download('jurnal-' . $user->nama_lengkap . '.pdf');
     }
 }
