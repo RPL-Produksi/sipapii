@@ -33,11 +33,14 @@ class SiswaImport implements ToModel, WithHeadingRow
             $jenisKelamin = 'Perempuan';
         }
 
-        $kelasNama = $row['kelas'] ?? $row['Kelas'];
-        $kelas = Kelas::firstOrCreate(['nama' => trim($kelasNama)]);
-
         $tahunAjarNama = $row['tahun_ajar'] ?? $row['Tahun_Ajar'];
         $tahunAjar = TahunAjar::firstOrCreate(['tahun_ajar' => trim($tahunAjarNama)]);
+        $kelasNama = $row['kelas'] ?? $row['Kelas'];
+        $kelas = Kelas::firstOrCreate([
+            'nama' => trim($kelasNama),
+            'tahun_ajar_id' => $tahunAjar->id
+        ]);
+
 
         if ($user) {
             Siswa::create([

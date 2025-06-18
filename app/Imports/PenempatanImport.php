@@ -45,14 +45,14 @@ class PenempatanImport implements ToCollection, WithHeadingRow, WithChunkReading
                 continue;
             }
 
-
-            $kelas = Kelas::firstOrCreate(
-                ['nama' => trim($row['kelas'])]
-            );
-
             $tahunAjar = TahunAjar::firstOrCreate(
                 ['tahun_ajar' => trim($row['tahun_ajar'])]
             );
+
+            $kelas = Kelas::firstOrCreate([
+                'nama' => trim($row['kelas']),
+                'tahun_ajar_id' => $tahunAjar->id
+            ]);
 
             $instansi = Instansi::firstOrCreate(
                 [

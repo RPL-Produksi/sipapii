@@ -141,11 +141,25 @@
                         data: 'id',
                         orderable: false,
                         render: function(data, type, row, meta) {
+                            let showUrl =
+                                '{{ route('admin.pengelolaan.tahun-ajar.kelas', ':id') }}';
+                            let alumniUrl =
+                                '{{ route('admin.pengelolaan.tahun-ajar.alumni', ':id') }}';
+
+                            let showBtn =
+                                `<a href='${showUrl.replace(':id', row.id)}' class="btn btn-success"><i class="fa-regular fa-eye"></i></a>`;
                             let editBtn =
-                                `<button onclick='edit("${data}")' class="btn btn-primary"><i class="fa-regular fa-edit"></i></button>`;
+                                `<button onclick='edit("${row.id}")' class="btn btn-primary"><i class="fa-regular fa-edit"></i></button>`;
                             let deleteBtn =
                                 `<button onclick="confirmDelete('${row.id}')" class="btn btn-danger"><i class="fa-regular fa-trash"></i></button>`;
-                            return `<div class="d-flex flex-row gap-2">${editBtn}${deleteBtn}</div>`;
+
+                            let alumniBtnText = row.is_alumni ? 'Aktifkan' : 'Alumnikan';
+                            let alumniType = row.is_alumni ? 'nonaktif' : 'aktif';
+                            // let btnType = row.is_alumni ? 'nonaktif' : 'aktif';
+                            let alumniBtn =
+                                `<a href="${alumniUrl.replace(':id', row.id)}?type=${alumniType}" class="btn btn-warning text-white fw-bold">${alumniBtnText}</a>`;
+
+                            return `<div class="d-flex flex-row gap-2">${showBtn}${editBtn}${deleteBtn}${alumniBtn}</div>`;
                         }
                     }
                 ],
