@@ -98,7 +98,7 @@ class AdminGuruController extends Controller
         $user = new User();
         $user->nama_lengkap = $request->nama_lengkap;
         $user->username = $username;
-        $user->password = Str::random(8);
+        $user->password = mt_rand(10000000, 99999999);
         $user->role = 'guru';
         $user->save();
 

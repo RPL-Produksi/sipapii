@@ -22,7 +22,7 @@ class SiswaImport implements ToModel, WithHeadingRow
         $user = User::create([
             'nama_lengkap' => $row['nama_lengkap'] ?? $row['Nama_Lengkap'],
             'username' => $row['nis'] ?? $row['NIS'],
-            'password' => Str::random(8),
+            'password' => mt_rand(10000000, 99999999),
             'role' => 'siswa',
         ]);
 

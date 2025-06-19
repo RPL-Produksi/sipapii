@@ -49,7 +49,7 @@ class AdminDataSiswaController extends Controller
         $user = User::updateOrCreate(['id' => @$id], [
             'nama_lengkap' => $request->nama_lengkap,
             'username' => $request->nis,
-            'password' => Str::random(8),
+            'password' => mt_rand(10000000, 99999999),
             'role' => 'siswa',
         ]);
 

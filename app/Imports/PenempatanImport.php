@@ -72,7 +72,7 @@ class PenempatanImport implements ToCollection, WithHeadingRow, WithChunkReading
                 ],
                 [
                     'nama_lengkap' => trim($row['nama_siswa']),
-                    'password' => Str::random(8),
+                    'password' => mt_rand(10000000, 99999999),
                     'role' => 'siswa',
                 ]
             );
