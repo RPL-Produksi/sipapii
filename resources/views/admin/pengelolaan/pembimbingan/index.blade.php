@@ -23,7 +23,8 @@
                         <div class="float-right">
                             <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addPembimbinganModal"><i
                                     class="fa-regular fa-add"></i></button>
-                            <a href="{{ route('admin.pengelolaan.pembimbingan.export') }}" class="btn btn-danger"><i class="fa-regular fa-file-export"></i></a>
+                            <a href="{{ route('admin.pengelolaan.pembimbingan.export') }}" class="btn btn-danger"><i
+                                    class="fa-regular fa-file-export"></i></a>
                         </div>
                     </div>
                 </div>

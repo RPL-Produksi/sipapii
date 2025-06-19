@@ -40,8 +40,8 @@
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td>{{ $item->user->nama_lengkap }}</td>
                                     <td>{{ $item->kelas->nama }}</td>
-                                    <td>{{ $item->pembimbingan->pembimbing->user->nama_lengkap }}</td>
-                                    <td>{{ $item->pembimbingan->guruMapelPKL->user->nama_lengkap }}</td>
+                                    <td>{{ $item->pembimbingan->pembimbing->user->nama_lengkap ?? '-' }}</td>
+                                    <td>{{ $item->pembimbingan->guruMapelPKL->user->nama_lengkap ?? '-' }}</td>
                                     <td>
                                         <div class="badge bg-{{ $item->user->is_active ? 'success' : 'danger' }} d-block">
                                             {{ $item->user->is_active ? 'Aktif' : 'Tidak Aktif' }}

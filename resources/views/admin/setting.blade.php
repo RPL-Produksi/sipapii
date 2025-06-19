@@ -20,7 +20,7 @@
                 <h1 class="mt-4">Halaman Sedang Dikembangkan</h1>
                 <p class="text-muted">Fitur ini belum tersedia saat ini. Silakan kembali nanti.</p>
                 <a href="{{ url()->previous() }}" class="btn btn-primary mt-3">
-                    <i class="fa fa-arrow-left me-1"></i> Kembali
+                    <i class="fa-regular fa-arrow-left me-1"></i> Kembali
                 </a>
             </div>
         </div>

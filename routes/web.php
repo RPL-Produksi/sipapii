@@ -261,6 +261,13 @@ Route::prefix('/siswa')->middleware(['auth', 'role:siswa'])->group(function () {
     });
 });
 
+// Route Path Alumni
+Route::prefix('/alumni')->middleware(['auth', 'role:alumni'])->group(function () {
+    Route::get('dasboard', function () {
+        return view('alumni.dashboard');
+    })->name('alumni.dashboard');
+});
+
 Route::get('/test/mail', function () {
     Mail::raw('ini test mail dari sipapii@smkn2smi.sch.id', function ($message) {
         $message->to('hilal.muhammad0807@gmail.com')->subject('Test Mail');

@@ -143,8 +143,6 @@
                         render: function(data, type, row, meta) {
                             let showUrl =
                                 '{{ route('admin.pengelolaan.tahun-ajar.kelas', ':id') }}';
-                            let alumniUrl =
-                                '{{ route('admin.pengelolaan.tahun-ajar.alumni', ':id') }}';
 
                             let showBtn =
                                 `<a href='${showUrl.replace(':id', row.id)}' class="btn btn-success"><i class="fa-regular fa-eye"></i></a>`;
@@ -153,14 +151,15 @@
                             let deleteBtn =
                                 `<button onclick="confirmDelete('${row.id}')" class="btn btn-danger"><i class="fa-regular fa-trash"></i></button>`;
 
-                            let alumniBtnText = row.is_alumni ? 'Aktifkan' : 'Alumnikan';
-                            let alumniType = row.is_alumni ? 'nonaktif' : 'aktif';
-                            // let btnType = row.is_alumni ? 'nonaktif' : 'aktif';
-                            let alumniBtn =
-                                `<a href="${alumniUrl.replace(':id', row.id)}?type=${alumniType}" class="btn btn-warning text-white fw-bold">${alumniBtnText}</a>`;
+                            let alumniBtn = '';
+                            if (!row.is_alumni) {
+                                alumniBtn =
+                                    `<button onclick="confirmAlumnikan('${row.id}')" class="btn btn-warning text-white fw-bold">Alumnikan</button>`;
+                            }
 
                             return `<div class="d-flex flex-row gap-2">${showBtn}${editBtn}${deleteBtn}${alumniBtn}</div>`;
                         }
+
                     }
                 ],
                 dom: "<'row'<'col-12 col-sm-3'l><'col-12 col-sm-9 text-end text-sm-start'f>>" +
@@ -206,7 +205,28 @@
                     Swal.fire("Penghapusan tahun ajar dibatalkan!");
                 }
             });
+        }
 
+        const confirmAlumnikan = (id) => {
+            const alumniUrl = '{{ route('admin.pengelolaan.tahun-ajar.alumni', ':id') }}?type=aktif';
+
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda tidak dapat mengembalikan siswa yang di alumnikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, alumnikan!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = alumniUrl.replace(':id', id);
+                    Swal.fire("Success, Siswa berhasil dialumnikan!", {
+                        icon: "success",
+                    });
+                } else {
+                    Swal.fire("Pengalumnikan siswa dibatalkan!");
+                }
+            });
         }
     </script>
 @endpush

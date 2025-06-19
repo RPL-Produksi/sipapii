@@ -21,6 +21,8 @@ class AuthController extends Controller
                 return redirect()->route('guru.dashboard');
             } else if ($user->role === 'siswa') {
                 return redirect()->route('siswa.dashboard');
+            } else if ($user->role === 'alumni') {
+                return redirect()->route('alumni.dashboard');
             }
         }
 

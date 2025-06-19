@@ -79,7 +79,17 @@ class SiswaAbsenController extends Controller
 
     $siswaId = Auth::user()->siswa->id;
     $menempati = Menempati::where('siswa_id', $siswaId)->with('instansi')->first();
+
+    if (!$menempati) {
+      return redirect()->back()->with('error', 'Anda belum ditempatkan silahkan hubungi admin');
+    }
+
     $pembimbing = Pembimbingan::where('siswa_id', $siswaId)->first();
+
+    if (!$pembimbing) {
+      return redirect()->back()->with('error', 'Anda belum mendapatkan pembimbingan silahkan hubungi admin');
+    }
+
     $jarak = $this->calculateDistance($request->lat, $request->long, $menempati->instansi->latitude, $menempati->instansi->longitude);
 
     $input = $request->all();

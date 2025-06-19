@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin\Pengelolaan;
 
 use App\Http\Controllers\Controller;
+use App\Models\Alumi;
+use App\Models\Alumni;
+use App\Models\Siswa;
 use App\Models\TahunAjar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -113,13 +116,34 @@ class AdminTahunAjarController extends Controller
     public function alumni(Request $request, $id)
     {
         $query = $request->query('type');
-        $tahunAjar = TahunAjar::where('id', $id)->first();
+        $tahunAjar = TahunAjar::findOrFail($id);
 
         if ($query === 'aktif') {
             $tahunAjar->is_alumni = true;
+
+            $siswas = Siswa::with('user')
+                ->where('tahun_ajar_id', $tahunAjar->id)
+                ->get();
+
+            foreach ($siswas as $item) {
+                Alumni::create([
+                    'user_id' => $item->user_id,
+                    'kelas_id' => $item->kelas_id,
+                    'nomor_wa' => $item->nomor_wa,
+                    'jenis_kelamin' => $item->jenis_kelamin,
+                    'tahun_ajar_id' => $item->tahun_ajar_id,
+                ]);
+
+                $item->user->role = 'alumni';
+                $item->user->is_active = false;
+                $item->user->save();
+
+                $item->delete();
+            }
         } else {
-            $tahunAjar->is_alumni = false;
+            return redirect()->back()->with('error', 'Query type tidak valid');
         }
+
         $tahunAjar->save();
 
         return redirect()->back()->with('success', 'Status alumni berhasil diubah');
