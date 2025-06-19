@@ -6,6 +6,7 @@ use App\Exports\DataInstansiExport;
 use App\Http\Controllers\Controller;
 use App\Imports\InstansiImport;
 use App\Models\Instansi;
+use App\Models\Siswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -124,5 +125,29 @@ class AdminInstansiController extends Controller
     public function exportInstansi()
     {
         return Excel::download(new DataInstansiExport, 'data_instansi.xlsx');
+    }
+
+    public function instansiSiswa(Request $request, $id)
+    {
+        $data['instansi'] = Instansi::where('id', $id)->first();
+
+        $data['siswa'] = Siswa::whereHas('penempatan', function ($q) use ($id) {
+            $q->where('instansi_id', $id);
+        })->get();
+
+
+        return view('admin.pengelolaan.instansi.siswa.index', [], ['menu_type' => 'pengelolaan-instansi'])->with($data);
+    }
+
+    public function nonactiveSiswa(Request $request, $id, $siswaId)
+    {
+        $siswa = Siswa::where('id', $siswaId)->whereHas('penempatan', function ($q) use ($id) {
+            $q->where('instansi_id', $id);
+        })->first();
+
+        $siswa->user->is_active = false;
+        $siswa->user->save();
+
+        return redirect()->back()->with('success', 'Siswa berhasil dinonaktifkan');
     }
 }
