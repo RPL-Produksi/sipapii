@@ -70,6 +70,8 @@ Route::prefix('/admin')->middleware(['auth', 'role:admin'])->group(function () {
                 Route::get('/{id}/delete', 'delete')->name('admin.pengelolaan.instansi.delete');
                 Route::post('/import', 'importInstansi')->name('admin.pengelolaan.instansi.import');
                 Route::get('/export', 'exportInstansi')->name('admin.pengelolaan.instansi.export');
+                Route::get('/{id}/siswa', 'instansiSiswa')->name('admin.pengelolaan.instansi.siswa');
+                Route::get('/{id}/siswa/{siswaId}/nonactive', 'nonactiveSiswa')->name('admin.pengelolaan.instansi.siswa.nonactive');
             });
         });
 

@@ -186,13 +186,19 @@
                         orderable: false,
                         render: function(data, type, row, meta) {
                             let editUrl = "{{ route('admin.pengelolaan.instansi.form', ':id') }}";
-                            editUrl = editUrl.replace(':id', data);
+                            editUrl = editUrl.replace(':id', row.id);
 
+                            let instansiSiswaUrl =
+                                "{{ route('admin.pengelolaan.instansi.siswa', ':id') }}"
+                            instansiSiswaUrl = instansiSiswaUrl.replace(":id", row.id)
+
+                            let instansiSiswaBtn =
+                                `<a href="${instansiSiswaUrl}" class="btn btn-success"><i class="fa-regular fa-eye"></i></a>`
                             let editBtn =
                                 `<a href="${editUrl}" class="btn btn-primary"><i class="fa-regular fa-edit"></i></a>`;
                             let deleteBtn =
                                 `<button onclick="confirmDelete('${row.id}')" class="btn btn-danger"><i class="fa-regular fa-trash"></i></button>`;
-                            return `<div class="d-flex flex-row gap-2">${editBtn}${deleteBtn}</div>`;
+                            return `<div class="d-flex flex-row gap-2">${instansiSiswaBtn}${editBtn}${deleteBtn}</div>`;
                         }
                     }
                 ],

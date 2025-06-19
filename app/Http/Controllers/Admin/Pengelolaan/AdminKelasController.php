@@ -16,7 +16,7 @@ class AdminKelasController extends Controller
     {
         $data['tahunAjar'] = TahunAjar::find($id);
 
-        return view('admin.pengelolaan.kelas.index', [], ['menu_type' => 'pengelolaan-tahun-ajar'])->with($data);
+        return view('admin.pengelolaan.tahun-ajar.kelas.index', [], ['menu_type' => 'pengelolaan-tahun-ajar'])->with($data);
     }
 
     public function data(Request $request, $id)
