@@ -2,6 +2,8 @@
 
 use App\Exports\DataSiswaExport;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminProfileController;
+use App\Http\Controllers\Admin\AdminSettingController;
 use App\Http\Controllers\Admin\AkunData\Guru\AdminGuruController;
 use App\Http\Controllers\Admin\Pengelolaan\AdminPenempatanController;
 use App\Http\Controllers\Auth\AuthController;
@@ -46,6 +48,16 @@ Route::controller(AuthController::class)->group(function () {
 Route::prefix('/admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::controller(AdminDashboardController::class)->group(function () {
         Route::get('/dashboard', 'index')->name('admin.dashboard');
+    });
+
+    Route::controller(AdminProfileController::class)->group(function () {
+        Route::get('/profile', 'index')->name('admin.profile');
+        Route::post('/profile/edit', 'edit')->name('admin.profile.edit');
+        Route::post('/picture/edit', 'changeProfile')->name('admin.profile.picture.edit');;
+    });
+
+    Route::controller(AdminSettingController::class)->group(function () {
+        Route::get('/setting', 'index')->name('admin.setting');
     });
 
     Route::prefix('/pengelolaan')->group(function () {
