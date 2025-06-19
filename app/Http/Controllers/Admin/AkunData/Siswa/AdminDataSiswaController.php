@@ -18,17 +18,15 @@ class AdminDataSiswaController extends Controller
 {
     public function index()
     {
-        $data['kelas'] = Kelas::orderBy('nama', 'ASC')->get();
-        $data['tahunAjar'] = TahunAjar::orderBy('tahun_ajar', 'ASC')->get();
-
-        return view('admin.akun-data.siswa.data-siswa.index', [], ['menu_type' => 'siswa', 'submenu_type' => 'siswa-data'])->with($data);
+        return view('admin.akun-data.siswa.data-siswa.index', [], ['menu_type' => 'siswa', 'submenu_type' => 'siswa-data']);
     }
 
     public function form($id = null)
     {
         $data['siswa'] = Siswa::where('user_id', $id)->first();
-        $data['kelas'] = Kelas::orderBy('nama', 'ASC')->get();
-        $data['tahunAjar'] = TahunAjar::orderBy('tahun_ajar', 'ASC')->get();
+        $data['kelas'] = Kelas::orderBy('nama', 'ASC')->whereHas('tahunAjar', function ($q) {
+            $q->where('is_alumni', false);
+        })->get();;
 
         return view('admin.akun-data.siswa.data-siswa.form', [], ['menu_type' => 'siswa', 'submenu_type' => 'siswa-data'])->with($data);
     }
