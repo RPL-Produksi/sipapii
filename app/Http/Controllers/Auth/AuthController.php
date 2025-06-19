@@ -54,8 +54,10 @@ class AuthController extends Controller
                     Auth::login($user, $request->has('remember'));
                     if ($user->role == 'guru') {
                         return redirect()->route('guru.dashboard');
-                    } else {
+                    } else if ($user->role === 'siswa') {
                         return redirect()->route('siswa.dashboard');
+                    } else {
+                        return redirect()->route('alumni.dashboard');
                     }
                 } else {
                     return redirect()->back()->with('error', 'Username atau password salah');
