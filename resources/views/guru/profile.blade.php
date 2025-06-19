@@ -94,7 +94,7 @@
                                 placeholder="Masukan password baru">
                         </div>
                         <div class="form-group">
-                            <label for="password">Password Lama</label>
+                            <label for="password">Konfirmasi Password Baru</label>
                             <input type="password" name="password_confirmation" class="form-control"
                                 id="passwordConfirmation" placeholder="Masukan konfirmasi password">
                         </div>
