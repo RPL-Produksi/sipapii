@@ -127,7 +127,7 @@
                         <button type="button" class="btn btn-link text-decoration-none" data-bs-dismiss="modal">
                             <span>Tutup</span>
                         </button>
-                        <button type="submit" class="btn btn-success">
+                        <button type="submit" class="btn btn-success" data-loading="true">
                             <span>Simpan</span>
                         </button>
                     </div>
@@ -178,7 +178,7 @@
                         <button type="button" class="btn btn-link text-decoration-none" data-bs-dismiss="modal">
                             <span>Tutup</span>
                         </button>
-                        <button type="submit" class="btn btn-success">
+                        <button type="submit" class="btn btn-success" data-loading="true">
                             <span>Simpan</span>
                         </button>
                     </div>

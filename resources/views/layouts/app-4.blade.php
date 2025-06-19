@@ -31,6 +31,7 @@
     @yield('content')
 
     <script src="{{ asset('assets/compiled/js/app.js') }}"></script>
+    <script src="{{ asset('assets/static/js/helper/isLoading.js') }}"></script>
     @stack('js')
 </body>
 

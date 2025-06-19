@@ -128,7 +128,8 @@
                                         <button type="{{ Request::query('type') == 'masuk' ? 'submit' : 'button' }}"
                                             class="btn btn-success w-100" id="submitAbsen"
                                             @if (Request::query('type') == 'pulang') data-bs-toggle="modal" 
-                                                data-bs-target="#absenPulangModal" @endif>
+                                                data-bs-target="#absenPulangModal" @endif
+                                            data-loading="true">
                                             <i class="fa-regular fa-camera me-2"></i>Absen {{ $status }}
                                         </button>
                                     </div>
@@ -149,7 +150,7 @@
     <div style="margin-bottom: 7rem;"></div>
 
     <div class="modal fade" id="absenPulangModal" tabindex="-1" role="dialog" aria-labelledby="absenPulangModalTitle"
-        aria-hidden="true">
+        aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -188,14 +189,14 @@
                         </div>
                         <div class="form-group">
                             <input type="file" accept="image/*" capture="camera" name="camera_data"
-                                id="camerInputPulang" class="d-none">
+                                id="cameraInputPulang" class="d-none">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn" data-bs-dismiss="modal">
+                        {{-- <button type="button" class="btn" data-bs-dismiss="modal">
                             <span>Tutup</span>
-                        </button>
-                        <button type="submit" class="btn btn-primary">
+                        </button> --}}
+                        <button type="submit" class="btn btn-primary" data-loading="true">
                             <span>Absen</span>
                         </button>
                     </div>
@@ -340,7 +341,7 @@
 
             const cameraData = $('#capturedImage').attr('src');
             const imageFile = dataURItoFile(cameraData, 'snapshot.jpg');
-            const fileInput = document.getElementById("camerInputPulang");
+            const fileInput = document.getElementById("cameraInputPulang");
             const dataTransfer = new DataTransfer();
             dataTransfer.items.add(imageFile);
             fileInput.files = dataTransfer.files;

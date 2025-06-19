@@ -214,7 +214,7 @@
                         <button type="button" class="btn" data-bs-dismiss="modal">
                             <span>Batal</span>
                         </button>
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary" data-loading="true">
                             <span>Ubah</span>
                         </button>
                     </div>

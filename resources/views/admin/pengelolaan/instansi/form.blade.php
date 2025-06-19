@@ -77,8 +77,8 @@
                                 <div class="col-12 d-flex justify-content-end">
                                     <a href="{{ route('admin.pengelolaan.instansi') }}" type="button"
                                         class="btn  me-1 mb-1">Batal</a>
-                                    <button type="submit"
-                                        class="btn btn-primary me-1 mb-1">{{ $instansi ? 'Ubah' : 'Tambah' }}</button>
+                                    <button type="submit" class="btn btn-primary me-1 mb-1"
+                                        data-loading="true">{{ $instansi ? 'Ubah' : 'Tambah' }}</button>
                                 </div>
                             </div>
                         </form>

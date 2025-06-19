@@ -58,7 +58,7 @@
                         </div>
                         <div class="card-footer">
                             <div class="d-flex align-items-center justify-content-end">
-                                <button type="submit" class="btn btn-success">Simpan</button>
+                                <button type="submit" class="btn btn-success" data-loading="true">Simpan</button>
                             </div>
                         </div>
                     </form>
@@ -89,9 +89,8 @@
                                             <input type="file" name="foto_profile" class="form-control mt-4 d-none"
                                                 id="inputChangeProfile">
                                         </form>
-                                        <button onclick="changeProfile()"
-                                            class="btn btn-primary btn-sm text-center mt-4">Ubah
-                                            Profile</button>
+                                        <button onclick="changeProfile()" class="btn btn-primary btn-sm text-center mt-4"
+                                            data-loading="true">Ubah Profile</button>
                                     </div>
                                 </div>
                             </div>
@@ -152,7 +151,7 @@
                         </div>
                         <div class="card-footer">
                             <div class="d-flex align-items-center justify-content-end">
-                                <button type="submit" class="btn btn-success">Simpan</button>
+                                <button type="submit" class="btn btn-success" data-loading="true">Simpan</button>
                             </div>
                         </div>
                     </form>

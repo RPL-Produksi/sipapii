@@ -160,7 +160,7 @@
                             data-bs-dismiss="modal">
                             <span>Batal</span>
                         </button>
-                        <button type="submit" class="btn btn-success">
+                        <button type="submit" class="btn btn-success" data-loading="true">
                             <span>Simpan</span>
                         </button>
                     </div>

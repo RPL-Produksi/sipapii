@@ -62,8 +62,8 @@
                                 </div>
                                 <div class="col-12 d-flex justify-content-end mt-3">
                                     <a href="{{ route('admin.siswa') }}" type="button" class="btn  me-1 mb-1">Batal</a>
-                                    <button type="submit"
-                                        class="btn btn-primary me-1 mb-1">{{ $siswa ? 'Ubah' : 'Tambah' }}</button>
+                                    <button type="submit" class="btn btn-primary me-1 mb-1"
+                                        data-loading="true">{{ $siswa ? 'Ubah' : 'Tambah' }}</button>
                                 </div>
                             </div>
                         </form>

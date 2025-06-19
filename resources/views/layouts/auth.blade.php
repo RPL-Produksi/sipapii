@@ -36,6 +36,7 @@
     </div>
 
     {{-- Global JS --}}
+    <script src="{{ asset('assets/static/js/helper/isLoading.js') }}"></script>
 
     @stack('js')
 </body>

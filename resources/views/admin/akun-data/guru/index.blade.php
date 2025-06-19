@@ -109,7 +109,7 @@
                         <button type="button" class="btn text-primary" data-bs-dismiss="modal">
                             <span>Batal</span>
                         </button>
-                        <button type="submit" class="btn btn-success ms-1">
+                        <button type="submit" class="btn btn-success ms-1" data-loading="true">
                             <span>Tambah</span>
                         </button>
                     </div>
@@ -148,7 +148,7 @@
                         <button type="button" class="btn text-primary" data-bs-dismiss="modal">
                             <span>Batal</span>
                         </button>
-                        <button type="submit" class="btn btn-success ms-1">
+                        <button type="submit" class="btn btn-success ms-1" data-loading="true">
                             <span>Ubah</span>
                         </button>
                     </div>
@@ -214,7 +214,7 @@
                         <button type="button" class="btn text-primary" data-bs-dismiss="modal">
                             <span>Batal</span>
                         </button>
-                        <button type="submit" class="btn btn-success ms-1">
+                        <button type="submit" class="btn btn-success ms-1" data-loading="true">
                             <span>Import</span>
                         </button>
                     </div>

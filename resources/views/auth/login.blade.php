@@ -47,7 +47,7 @@
             </label>
         </div>
 
-        <button class="btn btn-primary btn-block btn-md shadow-lg mt-5">Log in</button>
+        <button class="btn btn-primary btn-block btn-md shadow-lg mt-5" data-loading="true">Log in</button>
     </form>
 @endsection
 
