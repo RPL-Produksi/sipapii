@@ -26,7 +26,11 @@ class AdminDashboardController extends Controller
 
         $data['absen'] = Siswa::whereHas('absen', function ($q) {
             $q->where('tanggal', now()->format('d-m-Y'));
-        })->with('penempatan.instansi')->limit(5)->get();
+        })
+            ->with('penempatan.instansi')
+            ->orderByDesc('created_at')
+            ->limit(5)
+            ->get();
 
         $data['penempatan'] = Menempati::orderBy('created_at', 'desc')->with(['siswa.user', 'instansi'])->limit(5)->get();
 
