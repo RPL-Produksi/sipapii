@@ -241,7 +241,7 @@ Route::prefix('/siswa')->middleware(['auth', 'role:siswa'])->group(function () {
     Route::controller(SiswaProfileController::class)->group(function () {
         Route::prefix('/profile')->group(function () {
             Route::get('/', 'index')->name('siswa.profile');
-            Route::post('/email/add', 'addEmail')->name('siswa.profile.email.add');
+            Route::post('/fields/add', 'addFields')->name('siswa.profile.fields.add');
             Route::post('/picture/edit', 'changeProfile')->name('siswa.profile.picture.edit');
         });
     });

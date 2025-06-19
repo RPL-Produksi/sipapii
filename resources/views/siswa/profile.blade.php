@@ -19,7 +19,7 @@
                     <div class="card-header">
                         <h3 class="card-title">Akun Saya</h3>
                     </div>
-                    <form action="{{ route('siswa.profile.email.add') }}" method="POST">
+                    <form action="{{ route('siswa.profile.fields.add') }}" method="POST">
                         @csrf
                         <div class="card-body">
                             <div class="form-group">
@@ -36,6 +36,11 @@
                                 <label for="email">Email</label>
                                 <input type="email" name="email" id="email" class="form-control"
                                     value="{{ $siswa->user->email }}" placeholder="Masukan email anda">
+                            </div>
+                            <div class="form-group">
+                                <label for="nomor_wa">Nomor WA</label>
+                                <input type="nomor_wa" name="nomor_wa" id="nomor_wa" class="form-control"
+                                    value="{{ $siswa->nomor_wa }}" placeholder="Masukan nomor wa anda">
                             </div>
                             <div class="form-group">
                                 <label for="jenisKelamin">Jenis Kelamin</label>

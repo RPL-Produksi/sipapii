@@ -23,10 +23,11 @@ class SiswaProfileController extends Controller
         return view('siswa.profile', [], ['menu_type' => 'profile'])->with($data);
     }
 
-    public function addEmail(Request $request)
+    public function addFields(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email',
+            'nomor_wa' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -35,9 +36,11 @@ class SiswaProfileController extends Controller
 
         $user = User::where('id', Auth::user()->id)->first();
         $user->email = $request->email;
+        $user->siswa->nomor_wa = $request->nomor_wa;
         $user->save();
+        $user->siswa->save();
 
-        return redirect()->back()->with('success', 'Email berhasil ditambahkan');
+        return redirect()->back()->with('success', 'Another fields berhasil ditambahkan');
     }
 
     public function changeProfile(Request $request)

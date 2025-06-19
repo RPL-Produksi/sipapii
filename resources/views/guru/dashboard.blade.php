@@ -151,7 +151,7 @@
                                             </td>
                                             <td>{{ $item->penempatan->instansi->nama ?? '-' }}</td>
                                             <td>{{ $absen->status ?? '-' }}</td>
-                                            <td>{{ $item->pembimbingan->guruMapelPKL->user->nama_lengkap ?? '-' }}</td>
+                                            <td>{{ $item->pembimbingan->pembimbing->user->nama_lengkap ?? '-' }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

@@ -16,6 +16,7 @@ class Siswa extends Model
         'jenis_kelamin',
         'kelas_id',
         'tahun_ajar_id',
+        'nomor_wa'
     ];
 
     public function user()
