@@ -36,7 +36,7 @@ class GuruDashboardController extends Controller
             ->count();
 
         $data['absensi'] = Siswa::whereHas('pembimbingan', function ($query) use ($guruUserId) {
-            $query->whereHas('pembimbing', function ($q) use ($guruUserId) {
+            $query->whereHas('guruMapelPKL', function ($q) use ($guruUserId) {
                 $q->where('user_id', $guruUserId);
             });
         })
