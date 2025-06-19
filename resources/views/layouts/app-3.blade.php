@@ -33,6 +33,7 @@
                 @yield('content')
             </div>
 
+            @include('template.footer')
         </div>
         <div class="d-block d-lg-none">
             @include('template.bottombar.guru')

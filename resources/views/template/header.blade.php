@@ -54,8 +54,8 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownProfile">
                     @if (auth()->user()->role === 'admin')
-                        <a class="dropdown-item" href="#">Profile</a>
-                        <a class="dropdown-item" href="#">Setting</a>
+                        <a class="dropdown-item" href="{{ route('admin.profile') }}">Profile</a>
+                        <a class="dropdown-item" href="{{ route('admin.setting') }}">Setting</a>
                         <div class="dropdown-divider"></div>
                     @else
                         <a class="dropdown-item" href="{{ route('guru.profile') }}">Profile</a>

@@ -76,10 +76,10 @@
 @push('js')
     {{-- JS Only For This Page --}}
     <script>
-        fetch('https://api.quotable.io/random')
+        fetch('https://dummyjson.com/quotes/random')
             .then(response => response.json())
             .then(data => {
-                document.getElementById('quoteText').innerText = `“${data.content}”`;
+                document.getElementById('quoteText').innerText = `“${data.quote}”`;
             })
             .catch(err => {
                 document.getElementById('quoteText').innerText = '“Gagal mengambil quote. Silakan coba lagi nanti.”';

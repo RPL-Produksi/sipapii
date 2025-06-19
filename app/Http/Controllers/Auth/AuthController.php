@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -73,22 +74,32 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'old_password' => 'required',
-            'new_password' => 'required',
+            'new_password' => 'required|min:6',
             'password_confirmation' => 'required|same:new_password',
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator->errors())->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $user = User::where('id', Auth::user()->id)->first();
+        $user = User::where("id", Auth::user()->id)->first();
 
-        if ($request->old_password != $user->password) {
-            return redirect()->back()->with('error', 'Password lama tidak cocok');
+        if (Hash::needsRehash($user->password)) {
+            if ($request->old_password !== $user->password) {
+                return redirect()->back()->with('error', 'Password lama tidak cocok');
+            }
+        } else {
+            if (!Hash::check($request->old_password, $user->password)) {
+                return redirect()->back()->with('error', 'Password lama tidak cocok');
+            }
         }
 
-        // Auth::logout();
-        $user->password = $request->new_password;
+        if ($user->role === 'admin') {
+            $user->password = bcrypt($request->new_password);
+        } else {
+            $user->password = $request->new_password;
+        }
+
         $user->save();
 
         return redirect()->back()->with('success', 'Password berhasil diubah');
